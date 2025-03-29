@@ -1,47 +1,163 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
-   Name = "🔥 Dead Rails Script 🔥 ",
-   Icon = 116495829188952, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
-   LoadingTitle = "Dead Rails Hub",
-   LoadingSubtitle = "By Hypolox",
-   Theme = "Serenity", -- Check https://docs.sirius.menu/rayfield/configuration/themes
+   Name = "🔥 Dead Rails Hub 🔥",
+   Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
+   LoadingTitle = "🔐Dead Rails Key System🔐",
+   LoadingSubtitle = "by anonymous",
+   Theme = "AmberGlow", -- Check https://docs.sirius.menu/rayfield/configuration/themes
 
-   DisableRayfieldPrompts = false,
+   DisableRayfieldPrompts = true,
    DisableBuildWarnings = false, -- Prevents Rayfield from warning when the script has a version mismatch with the interface
 
    ConfigurationSaving = {
       Enabled = true,
-      FolderName = HypoX, -- Create a custom folder for your hub/game
-      FileName = "Team HypoX"
+      FolderName = nil, -- Create a custom folder for your hub/game
+      FileName = "Dead Rails Hub"
    },
 
    Discord = {
       Enabled = true, -- Prompt the user to join your Discord server if their executor supports it
-      Invite = "noinvitelink", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ ABCD would be ABCD
-      RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+      Invite = "fwPHqWj5Dw", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ ABCD would be ABCD
+      RememberJoins = false-- Set this to false to make them join the discord every time they load it up
    },
 
    KeySystem = true, -- Set this to true to use our key system
    KeySettings = {
-      Title = "Dead Rails Key",
-      Subtitle= "Link in Discord Server", -- Use this to tell the user how to get a key
-      FileName = "Put Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
+      Title = "Untitled",
+      Subtitle = "Key System",
+      Note = "Copy and paste to get key", -- Use this to tell the user how to get a key
+      FileName = "Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
       SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
       GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
-      Key = {"HypoX"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+      Key = {"Hello"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
    }
 })
 
 local MainTab = Window:CreateTab("🏠 Home", nil) -- Title, Image
-local MainSection = MainTab:CreateSection("Main")
+local MainSection = MainTab:CreateSection("Home")
+
+local Toggle = MainTab:CreateToggle({
+   Name = "Auto Aim ",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+   local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local Camera = workspace.CurrentCamera
+
+local AIM_SNAP_RADIUS = 3
+local AIM_SMOOTHNESS = 0.2
+
+-- Function to find the nearest enemy's head within the aim radius
+local function findClosestHeadToCrosshair()
+    local closestHead = nil
+    local smallestDistance = math.huge
+
+    for _, enemy in pairs(Players:GetPlayers()) do
+        if enemy ~= Players.LocalPlayer and enemy.Character then
+            local head = enemy.Character:FindFirstChild("Head")
+            
+            if head then
+                local headScreenPos, onScreen = Camera:WorldToScreenPoint(head.Position)
+                
+                if onScreen then
+                    local mousePos = UserInputService:GetMouseLocation()
+                    local distanceToCrosshair = (Vector2.new(headScreenPos.X, headScreenPos.Y) - mousePos).Magnitude
+
+                    if distanceToCrosshair < AIM_SNAP_RADIUS and distanceToCrosshair < smallestDistance then
+                        smallestDistance = distanceToCrosshair
+                        closestHead = head
+                    end
+                end
+            end
+        end
+    end
+
+    return closestHead
+end
+
+-- Function to smoothly aim at the target head
+local function aimAtTarget(targetHead)
+    if targetHead and Camera then
+        local direction = (targetHead.Position - Camera.CFrame.Position).unit
+        local newCFrame = CFrame.new(Camera.CFrame.Position, Camera.CFrame.Position + direction)
+
+        -- Smoothly adjust camera
+        Camera.CFrame = Camera.CFrame:Lerp(newCFrame, AIM_SMOOTHNESS)
+    end
+end
+
+-- Continuously run aim assist
+RunService.RenderStepped:Connect(function()
+    local targetHead = findClosestHeadToCrosshair()
+    if targetHead then
+        aimAtTarget(targetHead)
+    end
+end)
+   end,
+})
+
+local Toggle = MainTab:CreateToggle({
+   Name = "Auto Collect Bond",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+   local rs = game:GetService("RunService")
+local replicatedStorage = game:GetService("ReplicatedStorage")
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart") -- Get player's position
+local teleportRange = 50 -- Maximum teleport distance
+
+-- Create a RemoteEvent if it doesn't exist
+local teleportEvent = replicatedStorage:FindFirstChild("TeleportRequest")
+if not teleportEvent then
+    teleportEvent = Instance.new("RemoteEvent")
+    teleportEvent.Name = "TeleportRequest"
+    teleportEvent.Parent = replicatedStorage
+end
+
+-- Function to find the nearest "Bond" model
+local function teleportToBond()
+    local closestBond = nil
+    local shortestDistance = math.huge
+
+    for _, model in pairs(workspace:GetChildren()) do
+        if model:IsA("Model") and model.Name == "Bond" then -- Only target "Bond" models
+            local partInside = model:FindFirstChildWhichIsA("BasePart")
+            if partInside then
+                local distance = (partInside.Position - humanoidRootPart.Position).Magnitude
+                if distance < shortestDistance and distance <= teleportRange then
+                    closestBond = partInside.Position
+                    shortestDistance = distance
+                end
+            end
+        end
+    end
+
+    -- Teleport player if a "Bond" is found
+    if closestBond then
+        humanoidRootPart.CFrame = CFrame.new(closestBond + Vector3.new(0, 3, 0)) -- Slightly above
+    end
+end
+
+-- Run auto teleport every second using RunService
+rs.RenderStepped:Connect(function()
+    teleportToBond()
+    task.wait(1) -- Adjust teleport interval
+end)
+   end,
+})
 
 local Toggle = MainTab:CreateToggle({
    Name = "Toggle Esp",
    CurrentValue = false,
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
-  local rs = game:GetService("RunService")
+   local rs = game:GetService("RunService")
 local stuff2find = {
     "Walker", "Runner", "Werewolf", "Vampire", "Outlaw",
     "Goldbar", "Gold Bar", "Coal", "Treasury Bond", "Bond",
@@ -115,119 +231,4 @@ end)
 
 print('esp loaded ok')
    end,
-})
-
-local Toggle = MainTab:CreateToggle({
-   Name = "Auto Aim",
-   CurrentValue = false,
-   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-   Callback = function(Value)
-   local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local RunService = game:GetService("RunService")
-local Players = game:GetService("Players")
-local UserInputService = game:GetService("UserInputService")
-local Camera = workspace.CurrentCamera
-
-local AIM_SNAP_RADIUS = 3
-local AIM_SMOOTHNESS = 0.2
-
--- Function to find the nearest enemy's head within the aim radius
-local function findClosestHeadToCrosshair()
-    local closestHead = nil
-    local smallestDistance = math.huge
-
-    for _, enemy in pairs(Players:GetPlayers()) do
-        if enemy ~= Players.LocalPlayer and enemy.Character then
-            local head = enemy.Character:FindFirstChild("Head")
-            
-            if head then
-                local headScreenPos, onScreen = Camera:WorldToScreenPoint(head.Position)
-                
-                if onScreen then
-                    local mousePos = UserInputService:GetMouseLocation()
-                    local distanceToCrosshair = (Vector2.new(headScreenPos.X, headScreenPos.Y) - mousePos).Magnitude
-
-                    if distanceToCrosshair < AIM_SNAP_RADIUS and distanceToCrosshair < smallestDistance then
-                        smallestDistance = distanceToCrosshair
-                        closestHead = head
-                    end
-                end
-            end
-        end
-    end
-
-    return closestHead
-end
-
--- Function to smoothly aim at the target head
-local function aimAtTarget(targetHead)
-    if targetHead and Camera then
-        local direction = (targetHead.Position - Camera.CFrame.Position).unit
-        local newCFrame = CFrame.new(Camera.CFrame.Position, Camera.CFrame.Position + direction)
-
-        -- Smoothly adjust camera
-        Camera.CFrame = Camera.CFrame:Lerp(newCFrame, AIM_SMOOTHNESS)
-    end
-end
-
--- Continuously run aim assist
-RunService.RenderStepped:Connect(function()
-    local targetHead = findClosestHeadToCrosshair()
-    if targetHead then
-        aimAtTarget(targetHead)
-    end
-end)
-end)
-})
-
-local Toggle = MainTab:CreateToggle({
-  Name = "Auto Collect Bond",
-  CurrentValue = false,
-  Flag = "Toggle1",-- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-   Callback = function(Value)
-  local rs = game:GetService("RunService")
-local replicatedStorage = game:GetService("ReplicatedStorage")
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoidRootPart = character:WaitForChild("HumanoidRootPart") -- Get player's position
-local teleportRange = 50 -- Maximum teleport distance
-
--- Create a RemoteEvent if it doesn't exist
-local teleportEvent = replicatedStorage:FindFirstChild("TeleportRequest")
-if not teleportEvent then
-    teleportEvent = Instance.new("RemoteEvent")
-    teleportEvent.Name = "TeleportRequest"
-    teleportEvent.Parent = replicatedStorage
-end
-
--- Function to find the nearest "Bond" model
-local function teleportToBond()
-    local closestBond = nil
-    local shortestDistance = math.huge
-
-    for _, model in pairs(workspace:GetChildren()) do
-        if model:IsA("Model") and model.Name == "Bond" then -- Only target "Bond" models
-            local partInside = model:FindFirstChildWhichIsA("BasePart")
-            if partInside then
-                local distance = (partInside.Position - humanoidRootPart.Position).Magnitude
-                if distance < shortestDistance and distance <= teleportRange then
-                    closestBond = partInside.Position
-                    shortestDistance = distance
-                end
-            end
-        end
-    end
-
-    -- Teleport player if a "Bond" is found
-    if closestBond then
-        humanoidRootPart.CFrame = CFrame.new(closestBond + Vector3.new(0, 3, 0)) -- Slightly above
-    end
-end
-
--- Run auto teleport every second using RunService
-rs.RenderStepped:Connect(function()
-    teleportToBond()
-    task.wait(1) -- Adjust teleport interval
-end)
-  end,
-})
+})y
