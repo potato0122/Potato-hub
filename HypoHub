@@ -122,52 +122,62 @@ local Toggle = MainTab:CreateToggle({
    CurrentValue = false,
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
-   local Players = game:GetService("Players")
-local UserInputService = game:GetService("UserInputService")
+   local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 local Camera = workspace.CurrentCamera
-local LocalPlayer = Players.LocalPlayer
 
-local AIM_RANGE = 1000 -- Maximum detection range
-local AIM_SMOOTHNESS = 0.1 -- Lower is faster
+local AimAssistEvent = ReplicatedStorage:FindFirstChild("AimAssistEvent")
+local AIM_SNAP_RADIUS = 3
+local AIM_SMOOTHNESS = 0.2
 
--- Function to find the nearest enemy's head
-local function getNearestTarget()
-    local closestTarget = nil
-    local shortestDistance = AIM_RANGE
+-- Function to find the nearest enemy's head within the aim radius
+local function findClosestHeadToCrosshair()
+    local closestHead = nil
+    local smallestAngle = math.huge
 
-    for _, player in pairs(Players:GetPlayers()) do
-        if player ~= LocalPlayer and player.Character and player.Character:FindFirstChild("Head") then
-            local head = player.Character.Head
-            local distance = (head.Position - Camera.CFrame.Position).Magnitude
+    for _, enemy in pairs(game:GetService("Players"):GetPlayers()) do
+        if enemy.Character and enemy.Character:FindFirstChild("Head") then
+            local head = enemy.Character.Head
+            local headScreenPos, onScreen = Camera:WorldToScreenPoint(head.Position)
 
-            if distance < shortestDistance then
-                closestTarget = head
-                shortestDistance = distance
+            if onScreen then
+                local mousePos = game:GetService("UserInputService"):GetMouseLocation()
+                local distanceToCrosshair = (Vector2.new(headScreenPos.X, headScreenPos.Y) - mousePos).magnitude
+
+                if distanceToCrosshair < AIM_SNAP_RADIUS and distanceToCrosshair < smallestAngle then
+                    smallestAngle = distanceToCrosshair
+                    closestHead = head
+                end
             end
         end
     end
 
-    return closestTarget
+    return closestHead
 end
 
--- Function to aim at a target
-local function aimAtTarget(target)
-    if target then
-        local targetPosition = target.Position
-        local newCFrame = CFrame.new(Camera.CFrame.Position, targetPosition)
+-- Function to smoothly aim at the target head
+local function aimAtTarget(targetHead)
+    if targetHead then
+        local direction = (targetHead.Position - Camera.CFrame.Position).unit
+        local newCFrame = CFrame.new(Camera.CFrame.Position, Camera.CFrame.Position + direction)
+
+        -- Smoothly adjust camera
         Camera.CFrame = Camera.CFrame:Lerp(newCFrame, AIM_SMOOTHNESS)
-    end
-end
 
--- When the player clicks, auto-aim at the nearest enemy
-UserInputService.InputBegan:Connect(function(input, gameProcessed)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 and not gameProcessed then
-        local target = getNearestTarget()
-        if target then
-            aimAtTarget(target)
+        -- Send event to server
+        if AimAssistEvent then
+            AimAssistEvent:FireServer(targetHead)
         end
     end
+end
+
+-- Continuously run aim assist
+RunService.RenderStepped:Connect(function()
+    local targetHead = findClosestHeadToCrosshair()
+    if targetHead then
+        aimAtTarget(targetHead)
+    end
+end)
 end)
 })
 
