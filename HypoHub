@@ -213,3 +213,44 @@ while true do
 end
   end,
 })
+
+local MiscTab = Window:CreateTab("⚙️ Misc", nil) -- Title, Image
+local MiscSection = MiscTab:CreateSection("Misc")
+
+local Toggle = Tab:CreateToggle({
+   Name = "Night Vision",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+   local UserInputService = game:GetService("UserInputService")
+local Lighting = game:GetService("Lighting")
+
+local nightVisionEnabled = false
+
+local function toggleNightVision()
+    if nightVisionEnabled then
+        -- Disable Night Vision
+        Lighting.Brightness = 1
+        Lighting.Ambient = Color3.fromRGB(50, 50, 50) 
+        Lighting.OutdoorAmbient = Color3.fromRGB(50, 50, 50)
+        Lighting.ColorShift_Bottom = Color3.fromRGB(0, 0, 0)
+        Lighting.ColorShift_Top = Color3.fromRGB(0, 0, 0)
+    else
+        -- Enable Night Vision
+        Lighting.Brightness = 2
+        Lighting.Ambient = Color3.fromRGB(200, 200, 200)
+        Lighting.OutdoorAmbient = Color3.fromRGB(170, 170, 170)
+        Lighting.ColorShift_Bottom = Color3.fromRGB(100, 100, 100)
+        Lighting.ColorShift_Top = Color3.fromRGB(255, 255, 255)
+    end
+    nightVisionEnabled = not nightVisionEnabled
+end
+
+-- Toggle Night Vision when player presses "N"
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if not gameProcessed and input.KeyCode == Enum.KeyCode.N then
+        toggleNightVision()
+    end
+end)
+   end,
+})
