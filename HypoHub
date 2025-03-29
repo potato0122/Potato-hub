@@ -4,7 +4,7 @@ local Window = Rayfield:CreateWindow({
    Name = "🔥 Dead Rails Script 🔥 ",
    Icon = 116495829188952, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
    LoadingTitle = "Dead Rails Hub",
-   LoadingSubtitle = "Team HypoX",
+   LoadingSubtitle = "By Hypolox",
    Theme = "Serenity", -- Check https://docs.sirius.menu/rayfield/configuration/themes
 
    DisableRayfieldPrompts = false,
@@ -122,6 +122,16 @@ local MiscSection = MiscTab:CreateSection("Misc")
 
 local Toggle = Tab:CreateToggle({
    Name = "Misc",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+   -- The function that takes place when the toggle is pressed
+   -- The variable (Value) is a boolean on whether the toggle is true or false
+   end,
+})
+
+local MainToggle = Tab:CreateToggle({
+   Name = "Auto Collect Bond",
    CurrentValue = false,
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
