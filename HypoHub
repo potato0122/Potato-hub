@@ -118,54 +118,11 @@ print('esp loaded ok')
 })
 
 local Toggle = MainTab:CreateToggle({
-   Name = "Auto Collect Bond",
-   CurrentValue = false,
-   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-   Callback = function(Value)
-  local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoidRootPart = character:WaitForChild("HumanoidRootPart") -- Get player's position
-local teleportRange = 50  -- Maximum distance to teleport (adjust as needed)
-
--- Function to teleport player to the nearest "Bond" model
-local function teleportToBond()
-    local closestBond = nil
-    local shortestDistance = math.huge
-
-    for _, model in pairs(workspace:GetChildren()) do
-        if model:IsA("Model") and model.Name == "Bond" then -- Only target "Bond" models
-            local partInside = model:FindFirstChildWhichIsA("BasePart") -- Find the first part inside
-
-            if partInside then
-                local distance = (partInside.Position - humanoidRootPart.Position).Magnitude
-                if distance < shortestDistance and distance <= teleportRange then
-                    closestBond = partInside.Position
-                    shortestDistance = distance
-                end
-            end
-        end
-    end
-
-    -- Teleport player to the closest "Bond" model
-    if closestBond then
-        humanoidRootPart.CFrame = CFrame.new(closestBond + Vector3.new(0, 3, 0)) -- Teleport slightly above the bond
-    end
-end
-
--- Run Auto Teleport every second
-while true do
-    teleportToBond()
-    task.wait(1) -- Adjust teleport interval
-end
-   end,
-})
-
-local Toggle = MainTab:CreateToggle({
    Name = "Auto Aim",
    CurrentValue = false,
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
-  local Players = game:GetService("Players")
+   local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
 local Camera = workspace.CurrentCamera
