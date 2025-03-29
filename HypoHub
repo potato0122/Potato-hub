@@ -164,7 +164,6 @@ end
 -- Auto teleport every second
 while task.wait(1) do
     teleportToNearestBond()
-endinterval
 end
    end,
 })
