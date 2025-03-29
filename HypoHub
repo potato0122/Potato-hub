@@ -124,29 +124,33 @@ local Toggle = MainTab:CreateToggle({
    Callback = function(Value)
    local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
 local Camera = workspace.CurrentCamera
 
-local AimAssistEvent = ReplicatedStorage:FindFirstChild("AimAssistEvent")
 local AIM_SNAP_RADIUS = 3
 local AIM_SMOOTHNESS = 0.2
 
 -- Function to find the nearest enemy's head within the aim radius
 local function findClosestHeadToCrosshair()
     local closestHead = nil
-    local smallestAngle = math.huge
+    local smallestDistance = math.huge
 
-    for _, enemy in pairs(game:GetService("Players"):GetPlayers()) do
-        if enemy.Character and enemy.Character:FindFirstChild("Head") then
-            local head = enemy.Character.Head
-            local headScreenPos, onScreen = Camera:WorldToScreenPoint(head.Position)
+    for _, enemy in pairs(Players:GetPlayers()) do
+        if enemy ~= Players.LocalPlayer and enemy.Character then
+            local head = enemy.Character:FindFirstChild("Head")
+            
+            if head then
+                local headScreenPos, onScreen = Camera:WorldToScreenPoint(head.Position)
+                
+                if onScreen then
+                    local mousePos = UserInputService:GetMouseLocation()
+                    local distanceToCrosshair = (Vector2.new(headScreenPos.X, headScreenPos.Y) - mousePos).Magnitude
 
-            if onScreen then
-                local mousePos = game:GetService("UserInputService"):GetMouseLocation()
-                local distanceToCrosshair = (Vector2.new(headScreenPos.X, headScreenPos.Y) - mousePos).magnitude
-
-                if distanceToCrosshair < AIM_SNAP_RADIUS and distanceToCrosshair < smallestAngle then
-                    smallestAngle = distanceToCrosshair
-                    closestHead = head
+                    if distanceToCrosshair < AIM_SNAP_RADIUS and distanceToCrosshair < smallestDistance then
+                        smallestDistance = distanceToCrosshair
+                        closestHead = head
+                    end
                 end
             end
         end
@@ -157,17 +161,12 @@ end
 
 -- Function to smoothly aim at the target head
 local function aimAtTarget(targetHead)
-    if targetHead then
+    if targetHead and Camera then
         local direction = (targetHead.Position - Camera.CFrame.Position).unit
         local newCFrame = CFrame.new(Camera.CFrame.Position, Camera.CFrame.Position + direction)
 
         -- Smoothly adjust camera
         Camera.CFrame = Camera.CFrame:Lerp(newCFrame, AIM_SMOOTHNESS)
-
-        -- Send event to server
-        if AimAssistEvent then
-            AimAssistEvent:FireServer(targetHead)
-        end
     end
 end
 
