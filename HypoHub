@@ -168,9 +168,8 @@ end
    end,
 })
 
-
-local MiscTab = Window:CreateTab("🌟 Misc", nil)
-local MiscSection = Tab:CreateSection("Misc")
+local MiscTab = Window:CreateTab("🌟 Misc", nil) -- Title, Image
+local MiscSection = MiscTab:CreateSection("Misc")
 
 local MiscToggle = Tab:CreateToggle({
    Name = "Auto End",
