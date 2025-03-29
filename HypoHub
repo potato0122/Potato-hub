@@ -186,20 +186,29 @@ local Toggle = MainTab:CreateToggle({
   CurrentValue = false,
   Flag = "Toggle1",-- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
-  local player = game.Players.LocalPlayer
+  local rs = game:GetService("RunService")
+local replicatedStorage = game:GetService("ReplicatedStorage")
+local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local humanoidRootPart = character:WaitForChild("HumanoidRootPart") -- Get player's position
-local teleportRange = 50  -- Maximum distance to teleport (adjust as needed)
+local teleportRange = 50 -- Maximum teleport distance
 
--- Function to teleport player to the nearest "Bond" model
+-- Create a RemoteEvent if it doesn't exist
+local teleportEvent = replicatedStorage:FindFirstChild("TeleportRequest")
+if not teleportEvent then
+    teleportEvent = Instance.new("RemoteEvent")
+    teleportEvent.Name = "TeleportRequest"
+    teleportEvent.Parent = replicatedStorage
+end
+
+-- Function to find the nearest "Bond" model
 local function teleportToBond()
     local closestBond = nil
     local shortestDistance = math.huge
 
     for _, model in pairs(workspace:GetChildren()) do
         if model:IsA("Model") and model.Name == "Bond" then -- Only target "Bond" models
-            local partInside = model:FindFirstChildWhichIsA("BasePart") -- Find the first part inside
-
+            local partInside = model:FindFirstChildWhichIsA("BasePart")
             if partInside then
                 local distance = (partInside.Position - humanoidRootPart.Position).Magnitude
                 if distance < shortestDistance and distance <= teleportRange then
@@ -210,16 +219,16 @@ local function teleportToBond()
         end
     end
 
-    -- Teleport player to the closest "Bond" model
+    -- Teleport player if a "Bond" is found
     if closestBond then
-        humanoidRootPart.CFrame = CFrame.new(closestBond + Vector3.new(0, 3, 0)) -- Teleport slightly above the bond
+        humanoidRootPart.CFrame = CFrame.new(closestBond + Vector3.new(0, 3, 0)) -- Slightly above
     end
 end
 
--- Run Auto Teleport every second
-while true do
+-- Run auto teleport every second using RunService
+rs.RenderStepped:Connect(function()
     teleportToBond()
     task.wait(1) -- Adjust teleport interval
-end
+end)
   end,
 })
