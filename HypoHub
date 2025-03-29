@@ -38,7 +38,7 @@ local MainSection = MainTab:CreateSection("Main")
 
 local Toggle = MainTab:CreateToggle({
    Name = "Toggle Esp",
-   CurrentValue = true,
+   CurrentValue = false,
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
   local rs = game:GetService("RunService")
@@ -114,69 +114,5 @@ rs.Heartbeat:Connect(function()
 end)
 
 print('esp loaded ok')
-   end,
-})
-
-
-local Toggle = MiscTab:CreateToggle({
-   Name = "Auto Collect Bond",
-   CurrentValue = true,
-   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-   Callback = function(Value)
-   local player = game.Players.LocalPlayer
-local teleportRange = 100 -- Increase range for testing
-
--- Function to get the player's HumanoidRootPart safely
-local function getHumanoidRootPart()
-    local character = player.Character or player.CharacterAdded:Wait()
-    return character and character:FindFirstChild("HumanoidRootPart")
-end
-
-local function teleportToNearestBond()
-    local humanoidRootPart = getHumanoidRootPart()
-    if not humanoidRootPart then return end -- Exit if no HumanoidRootPart is found
-
-    local closestBond = nil
-    local shortestDistance = math.huge
-
-    for _, model in ipairs(workspace:GetChildren()) do
-        if model:IsA("Model") and model.Name == "Bond" then
-            local partInside = model:FindFirstChildWhichIsA("BasePart")
-            if partInside then
-                local distance = (partInside.Position - humanoidRootPart.Position).Magnitude
-                if distance < shortestDistance and distance <= teleportRange then
-                    closestBond = partInside
-                    shortestDistance = distance
-                end
-            end
-        end
-    end
-
-    -- Teleport player if a valid bond is found
-    if closestBond then
-        humanoidRootPart.CFrame = CFrame.new(closestBond.Position + Vector3.new(0, 3, 0)) -- Teleport slightly above the bond
-        print("Teleported to:", closestBond.Position)
-    else
-        warn("No Bond found within range!")
-    end
-end
-
--- Auto teleport every second
-while task.wait(1) do
-    teleportToNearestBond()
-end
-   end,
-})
-
-local MiscTab = Window:CreateTab("🌟 Misc", nil) -- Title, Image
-local MiscSection = MiscTab:CreateSection("Misc")
-
-local MiscToggle = Tab:CreateToggle({
-   Name = "Auto End",
-   CurrentValue = true,
-   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-   Callback = function(Value)
-   -- The function that takes place when the toggle is pressed
-   -- The variable (Value) is a boolean on whether the toggle is true or false
    end,
 })
