@@ -160,7 +160,7 @@ local function aimAtTarget(target)
     end
 end
 
--- When the player clicks, aim at the nearest enemy
+-- When the player clicks, auto-aim at the nearest enemy
 UserInputService.InputBegan:Connect(function(input, gameProcessed)
     if input.UserInputType == Enum.UserInputType.MouseButton1 and not gameProcessed then
         local target = getNearestTarget()
@@ -169,11 +169,10 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
         end
     end
 end)
-   end,
 })
 
 local Toggle = MainTab:CreateToggle({
-  Name = "Auto Collect Bind",
+  Name = "Auto Collect Bond",
   CurrentValue = false,
   Flag = "Toggle1",-- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
