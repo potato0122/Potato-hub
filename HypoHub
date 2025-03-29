@@ -1,0 +1,118 @@
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+   Name = "🔥 Dead Rails Script 🔥 ",
+   Icon = 116495829188952, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
+   LoadingTitle = "Dead Rails Hub",
+   LoadingSubtitle = "Team HypoX",
+   Theme = "Bloom", -- Check https://docs.sirius.menu/rayfield/configuration/themes
+
+   DisableRayfieldPrompts = false,
+   DisableBuildWarnings = false, -- Prevents Rayfield from warning when the script has a version mismatch with the interface
+
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = nil, -- Create a custom folder for your hub/game
+      FileName = "Team HypoX"
+   },
+
+   Discord = {
+      Enabled = true, -- Prompt the user to join your Discord server if their executor supports it
+      Invite = "noinvitelink", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ ABCD would be ABCD
+      RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+   },
+
+   KeySystem = true, -- Set this to true to use our key system
+   KeySettings = {
+      Title = "Dead Rails Key",
+      Subtitle= "Link in Discord Server", -- Use this to tell the user how to get a key
+      FileName = "Put Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
+      SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+      Key = {"HypoX"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+   }
+})
+
+local MainTab = Window:CreateTab("🏠 Home", nil) -- Title, Image
+local MainSection = MainTab:CreateSection("Main")
+
+local Toggle = MainTab:CreateToggle({
+   Name = "Toggle Esp",
+   CurrentValue = true,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+  local rs = game:GetService("RunService")
+local stuff2find = {
+    "Walker", "Runner", "Werewolf", "Vampire", "Outlaw",
+    "Goldbar", "Gold Bar", "Coal", "Treasury Bond", "Bond",
+    "Bandage", "Snake Oil", "Snake Coil"
+}
+
+function makelabel(p, txt)
+    if p:FindFirstChild("esp") then return end
+
+    local bg = Instance.new("BillboardGui")
+    bg.Name = "esp"
+    bg.Size = UDim2.new(0, 80, 0, 20)
+    bg.StudsOffset = Vector3.new(0, 2.5, 0)
+    bg.AlwaysOnTop = true
+    bg.Parent = p
+
+    local label = Instance.new("TextLabel")
+    label.Size = UDim2.new(1, 0, 1, 0)
+    label.BackgroundTransparency = 1
+    label.Text = txt
+    label.TextColor3 = Color3.new(1, 1, 1)
+    label.TextScaled = true
+    label.Font = Enum.Font.Garamond
+    label.Parent = bg
+end
+
+function DoGlow(part, name)
+    if part:FindFirstChild("myglow") then 
+        return 
+    end
+
+    local h = Instance.new("Highlight")
+    h.Name = "myglow"
+    h.Parent = part
+    h.FillTransparency = 0.7
+    h.OutlineTransparency = 0.2
+
+    h.FillColor = Color3.new(1, 1, 1)
+    h.OutlineColor = Color3.fromRGB(200, 200, 200)
+
+    makelabel(part, name)
+end
+
+function FindStuff()
+    for i, v in pairs(workspace:GetChildren()) do
+        pcall(function()
+            if table.find(stuff2find, v.Name) then
+                if v:IsA("Model") and v.PrimaryPart then
+                    DoGlow(v.PrimaryPart, v.Name)
+                elseif v:IsA("Part") or v:IsA("MeshPart") then
+                    DoGlow(v, v.Name)
+                end
+            end
+        end)
+    end
+
+    for i, v in pairs(workspace:GetDescendants()) do
+        if table.find(stuff2find, v.Name) and not v:IsDescendantOf(game.Players.LocalPlayer.Character) then
+            if v:IsA("Model") and v.PrimaryPart then
+                DoGlow(v.PrimaryPart, v.Name)
+            elseif v:IsA("Part") then
+                DoGlow(v, v.Name)
+            end
+        end
+    end
+end
+
+rs.Heartbeat:Connect(function()
+    FindStuff()
+end)
+
+print('esp loaded ok')
+   end,
+})
