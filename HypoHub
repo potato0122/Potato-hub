@@ -124,39 +124,47 @@ local Toggle = MainTab:CreateToggle({
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
    local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoidRootPart = character:WaitForChild("HumanoidRootPart") -- Get player's position
-local teleportRange = 50  -- Maximum distance to teleport (adjust as needed)
+local teleportRange = 100 -- Increase range for testing
 
--- Function to teleport player to the nearest "Bond" model
-local function teleportToBond()
+-- Function to get the player's HumanoidRootPart safely
+local function getHumanoidRootPart()
+    local character = player.Character or player.CharacterAdded:Wait()
+    return character and character:FindFirstChild("HumanoidRootPart")
+end
+
+local function teleportToNearestBond()
+    local humanoidRootPart = getHumanoidRootPart()
+    if not humanoidRootPart then return end -- Exit if no HumanoidRootPart is found
+
     local closestBond = nil
     local shortestDistance = math.huge
 
-    for _, model in pairs(workspace:GetChildren()) do
-        if model:IsA("Model") and model.Name == "Bond" then -- Only target "Bond" models
-            local partInside = model:FindFirstChildWhichIsA("BasePart") -- Find the first part inside
-
+    for _, model in ipairs(workspace:GetChildren()) do
+        if model:IsA("Model") and model.Name == "Bond" then
+            local partInside = model:FindFirstChildWhichIsA("BasePart")
             if partInside then
                 local distance = (partInside.Position - humanoidRootPart.Position).Magnitude
                 if distance < shortestDistance and distance <= teleportRange then
-                    closestBond = partInside.Position
+                    closestBond = partInside
                     shortestDistance = distance
                 end
             end
         end
     end
 
-    -- Teleport player to the closest "Bond" model
+    -- Teleport player if a valid bond is found
     if closestBond then
-        humanoidRootPart.CFrame = CFrame.new(closestBond + Vector3.new(0, 3, 0)) -- Teleport slightly above the bond
+        humanoidRootPart.CFrame = CFrame.new(closestBond.Position + Vector3.new(0, 3, 0)) -- Teleport slightly above the bond
+        print("Teleported to:", closestBond.Position)
+    else
+        warn("No Bond found within range!")
     end
 end
 
--- Run Auto Teleport every second
-while true do
-    teleportToBond()
-    task.wait(1) -- Adjust teleport interval
+-- Auto teleport every second
+while task.wait(1) do
+    teleportToNearestBond()
+endinterval
 end
    end,
 })
