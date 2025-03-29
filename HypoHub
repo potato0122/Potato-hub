@@ -117,25 +117,100 @@ print('esp loaded ok')
    end,
 })
 
-local MiscTab =Window:CreateTab("Misc", "nil")
-local MiscSection = MiscTab:CreateSection("Misc")
-
-local Toggle = Tab:CreateToggle({
-   Name = "Misc",
-   CurrentValue = false,
-   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-   Callback = function(Value)
-   -- The function that takes place when the toggle is pressed
-   -- The variable (Value) is a boolean on whether the toggle is true or false
-   end,
-})
-
 local MainToggle = Tab:CreateToggle({
    Name = "Auto Collect Bond",
    CurrentValue = false,
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
-   -- The function that takes place when the toggle is pressed
-   -- The variable (Value) is a boolean on whether the toggle is true or false
+  local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart") -- Get player's position
+local teleportRange = 50  -- Maximum distance to teleport (adjust as needed)
+
+-- Function to teleport player to the nearest "Bond" model
+local function teleportToBond()
+    local closestBond = nil
+    local shortestDistance = math.huge
+
+    for _, model in pairs(workspace:GetChildren()) do
+        if model:IsA("Model") and model.Name == "Bond" then -- Only target "Bond" models
+            local partInside = model:FindFirstChildWhichIsA("BasePart") -- Find the first part inside
+
+            if partInside then
+                local distance = (partInside.Position - humanoidRootPart.Position).Magnitude
+                if distance < shortestDistance and distance <= teleportRange then
+                    closestBond = partInside.Position
+                    shortestDistance = distance
+                end
+            end
+        end
+    end
+
+    -- Teleport player to the closest "Bond" model
+    if closestBond then
+        humanoidRootPart.CFrame = CFrame.new(closestBond + Vector3.new(0, 3, 0)) -- Teleport slightly above the bond
+    end
+end
+
+-- Run Auto Teleport every second
+while true do
+    teleportToBond()
+    task.wait(1) -- Adjust teleport interval
+end
+   end,
+})
+
+local MainToggle = Tab:CreateToggle({
+   Name = "Auto Aim",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+  local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local Camera = workspace.CurrentCamera
+local LocalPlayer = Players.LocalPlayer
+
+local AIM_RANGE = 1000 -- Maximum detection range
+local AIM_SMOOTHNESS = 0.1 -- Lower is faster
+
+-- Function to find the nearest enemy's head
+local function getNearestTarget()
+    local closestTarget = nil
+    local shortestDistance = AIM_RANGE
+
+    for _, player in pairs(Players:GetPlayers()) do
+        if player ~= LocalPlayer and player.Character and player.Character:FindFirstChild("Head") then
+            local head = player.Character.Head
+            local distance = (head.Position - Camera.CFrame.Position).Magnitude
+
+            if distance < shortestDistance then
+                closestTarget = head
+                shortestDistance = distance
+            end
+        end
+    end
+
+    return closestTarget
+end
+
+-- Function to aim at a target
+local function aimAtTarget(target)
+    if target then
+        local targetPosition = target.Position
+        local newCFrame = CFrame.new(Camera.CFrame.Position, targetPosition)
+        Camera.CFrame = Camera.CFrame:Lerp(newCFrame, AIM_SMOOTHNESS)
+    end
+end
+
+-- When the player clicks, aim at the nearest enemy
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 and not gameProcessed then
+        local target = getNearestTarget()
+        if target then
+            aimAtTarget(target)
+        end
+    end
+end)
    end,
 })
