@@ -105,7 +105,7 @@ local Toggle = MainTab:CreateToggle({
    CurrentValue = false,
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
-   local rs = game:GetService("RunService")
+      local rs = game:GetService("RunService")
 local replicatedStorage = game:GetService("ReplicatedStorage")
 local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
@@ -157,7 +157,7 @@ local Toggle = MainTab:CreateToggle({
    CurrentValue = false,
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
-   local rs = game:GetService("RunService")
+      local rs = game:GetService("RunService")
 local stuff2find = {
     "Walker", "Runner", "Werewolf", "Vampire", "Outlaw",
     "Goldbar", "Gold Bar", "Coal", "Treasury Bond", "Bond",
@@ -231,4 +231,4 @@ end)
 
 print('esp loaded ok')
    end,
-})y
+})
