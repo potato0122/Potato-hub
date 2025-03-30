@@ -358,8 +358,89 @@ local Toggle = MiscTab:CreateToggle({
    CurrentValue = false,
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
-   -- The function that takes place when the toggle is pressed
-   -- The variable (Value) is a boolean on whether the toggle is true or false
+   local rs = game:GetService("RunService") -- Get RunService
+local players = game:GetService("Players") -- Get Players service
+local player = players.LocalPlayer -- Get the local player
+local attackDistance = 10 -- Maximum attack range
+local attackCooldown = 1 -- Cooldown between attacks (in seconds)
+local lastAttackTime = 0 -- Track last attack time
+local shovelToolName = "Shovel" -- The tool that activates Kill Aura
+local toolEquipped = false -- Track if tool is equipped
+
+-- List of enemy names to attack
+local validEnemies = {
+    ["Walker"] = true,
+    ["Runner"] = true,
+    ["Werewolf"] = true,
+    ["Vampire"] = true,
+    ["Sheriff"] = true
+}
+
+-- Function to attack an enemy
+local function attackEnemy(enemy)
+    local humanoid = enemy:FindFirstChildOfClass("Humanoid")
+    
+    if humanoid then
+        humanoid:TakeDamage(20) -- Deals 20 damage
+        print("Attacked:", enemy.Name)
+    end
+end
+
+-- Kill Aura function (only works when Shovel is equipped)
+local function killAura()
+    if not toolEquipped then return end -- Stop if Shovel is not equipped
+
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+
+    if humanoidRootPart and tick() - lastAttackTime >= attackCooldown then
+        lastAttackTime = tick() -- Update last attack time
+        
+        for _, enemy in pairs(workspace:GetChildren()) do
+            if validEnemies[enemy.Name] and enemy:IsA("Model") then
+                local enemyRoot = enemy:FindFirstChild("HumanoidRootPart")
+                
+                if enemyRoot and (humanoidRootPart.Position - enemyRoot.Position).Magnitude <= attackDistance then
+                    attackEnemy(enemy)
+                end
+            end
+        end
+    end
+end
+
+-- Detect when the shovel tool is equipped
+local function onToolEquipped()
+    toolEquipped = true
+end
+
+-- Detect when the shovel tool is unequipped
+local function onToolUnequipped()
+    toolEquipped = false
+end
+
+-- Detect when the player gets the tool
+local function detectTool()
+    local backpack = player:FindFirstChild("Backpack")
+    if backpack then
+        local shovel = backpack:FindFirstChild(shovelToolName)
+        if shovel then
+            shovel.Equipped:Connect(onToolEquipped)
+            shovel.Unequipped:Connect(onToolUnequipped)
+        end
+    end
+end
+
+-- Check for the tool when character spawns
+player.CharacterAdded:Connect(function()
+    wait(1) -- Wait for backpack to load
+    detectTool()
+end)
+
+-- Run Kill Aura every frame
+rs.Heartbeat:Connect(killAura)
+
+-- Check for the tool in case the player already has it
+detectTool()
    end,
 })
 
