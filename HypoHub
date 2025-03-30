@@ -373,7 +373,14 @@ local validEnemies = {
     ["Runner"] = true,
     ["Werewolf"] = true,
     ["Vampire"] = true,
-    ["Sheriff"] = true
+    ["Sheriff"] = true,
+    ["Ironclad Zombie"] = true,
+    ["Zombie Banker"] = true,
+    ["Dynamite Zombie"] = true,
+    ["Zombie Soldier"] = true,
+    ["Outlaws"] = true,
+    ["Wolf"] = true,
+    ["Skeleton"] = true
 }
 
 -- Function to attack an enemy
