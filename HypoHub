@@ -284,21 +284,25 @@ local Toggle = MiscTab:CreateToggle({
    CurrentValue = false,
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
-   local rs = game:GetService("RunService") -- Get RunService
-local collectionDistance = 10 -- Max distance to collect corpses
+   -- Services
+local rs = game:GetService("RunService") -- Get RunService
 local player = game.Players.LocalPlayer -- Get the player
+
+-- Settings
+local collectionDistance = 10 -- Max distance to collect corpses
 local sackToolName = "Sack" -- The name of the tool used for collecting
 
--- List of corpse types to collect
+-- List of valid corpses that have a sell value
 local validCorpses = {
-    ["Walker"] = true,
-    ["Runner"] = true,
-    ["Werewolf"] = true,
     ["Vampire"] = true,
-    ["Sheriff"] = true
+    ["Werewolf"] = true,
+    ["Outlaw"] = true,
+    ["Unicorn"] = true,
+    ["Captain Prescott"] = true,
+    ["Nikola Tesla"] = true
 }
 
--- Function to get player's Sack tool
+-- Function to get the player's Sack tool
 local function getSackTool()
     if player.Backpack:FindFirstChild(sackToolName) then
         return player.Backpack:FindFirstChild(sackToolName)
