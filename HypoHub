@@ -234,7 +234,7 @@ print('esp loaded ok')
 })
 
 local InteTab = Window:CreateTab("Interact", nil) -- Title, Image
-local InteSection = MiscTab:CreateSection("Misc")
+local InteSection = InteTab:CreateSection("Interact")
 
 local Toggle = InteTab:CreateToggle({
    Name = "Always Day",
