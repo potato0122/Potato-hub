@@ -267,7 +267,7 @@ local Toggle = InteTab:CreateToggle({
 })
 
 local MiscTab = Window:CreateTab("Misc", nil) -- Title, Image
-local MiscSection = InteTab:CreateSection("Misc")
+local MiscSection = MiscTab:CreateSection("Misc")
 
 local Toggle = MiscTab:CreateToggle({
    Name = "Auto Fuel",
