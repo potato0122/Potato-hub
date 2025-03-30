@@ -265,3 +265,16 @@ local Toggle = InteTab:CreateToggle({
    -- The variable (Value) is a boolean on whether the toggle is true or false
    end,
 })
+
+local MiscTab = Window:CreateTab("Misc", nil) -- Title, Image
+local MiscSection = InteTab:CreateSection("Misc")
+
+local Toggle = MiscTab:CreateToggle({
+   Name = "Auto Fuel",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+   -- The function that takes place when the toggle is pressed
+   -- The variable (Value) is a boolean on whether the toggle is true or false
+   end,
+})
