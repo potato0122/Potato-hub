@@ -280,12 +280,66 @@ local Toggle = MiscTab:CreateToggle({
 })
 
 local Toggle = MiscTab:CreateToggle({
-   Name = "Auto Collec Corpse",
+   Name = "Auto Collect Corpse",
    CurrentValue = false,
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
-   -- The function that takes place when the toggle is pressed
-   -- The variable (Value) is a boolean on whether the toggle is true or false
+   local rs = game:GetService("RunService") -- Get RunService
+local collectionDistance = 10 -- Max distance to collect corpses
+local player = game.Players.LocalPlayer -- Get the player
+local sackToolName = "Sack" -- The name of the tool used for collecting
+
+-- List of corpse types to collect
+local validCorpses = {
+    ["Walker"] = true,
+    ["Runner"] = true,
+    ["Werewolf"] = true,
+    ["Vampire"] = true,
+    ["Sheriff"] = true
+}
+
+-- Function to get player's Sack tool
+local function getSackTool()
+    if player.Backpack:FindFirstChild(sackToolName) then
+        return player.Backpack:FindFirstChild(sackToolName)
+    elseif player.Character and player.Character:FindFirstChild(sackToolName) then
+        return player.Character:FindFirstChild(sackToolName)
+    end
+    return nil
+end
+
+-- Auto-collect function
+local function collectCorpses()
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+    local sack = getSackTool() -- Get Sack tool
+
+    if humanoidRootPart and sack then
+        for _, corpse in pairs(workspace:GetChildren()) do
+            if validCorpses[corpse.Name] and corpse:IsA("Model") then
+                local corpseRoot = corpse:FindFirstChild("HumanoidRootPart")
+
+                if corpseRoot and (humanoidRootPart.Position - corpseRoot.Position).Magnitude <= collectionDistance then
+                    print("Collecting corpse:", corpse.Name)
+
+                    -- Move corpse inside the Sack tool
+                    local collectedFolder = sack:FindFirstChild("CollectedCorpses")
+                    if not collectedFolder then
+                        collectedFolder = Instance.new("Folder")
+                        collectedFolder.Name = "CollectedCorpses"
+                        collectedFolder.Parent = sack
+                    end
+                    
+                    corpse.Parent = collectedFolder -- Store corpse in Sack
+                    corpse:SetPrimaryPartCFrame(sack.Handle.CFrame * CFrame.new(0, #collectedFolder:GetChildren(), 0))
+                end
+            end
+        end
+    end
+end
+
+-- Run auto-collect every frame
+rs.Heartbeat:Connect(collectCorpses)
    end,
 })
 
