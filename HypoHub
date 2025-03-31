@@ -158,78 +158,61 @@ local Toggle = MainTab:CreateToggle({
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
       local rs = game:GetService("RunService")
-local stuff2find = {
-    "Walker", "Runner", "Werewolf", "Vampire", "Outlaw",
-    "Goldbar", "Gold Bar", "Coal", "Treasury Bond", "Bond",
-    "Bandage", "Snake Oil", "Snake Coil"
-}
+local stuff2find = { "Zombie", "Runner Zombie", "Banker Zombie", "Ironclad Zombie", "Dynamite Zombie", "Sheriff Zombie", "Zombie Soldier", "Captain Prescott", "Lab Zombie", "Outlaw", "Rifle Outlaw", "Shotgun Outlaw", "Dynamite Outlaw", "Werewolf", "Vampire", "Wolf", "Bear", "Snake", "Tesla Coil", "Tesla Turret", "Tesla Bot", "Nikola Tesla" }
 
-function makelabel(p, txt)
-    if p:FindFirstChild("esp") then return end
+function makelabel(p, txt) if p:FindFirstChild("esp") then return end
 
-    local bg = Instance.new("BillboardGui")
-    bg.Name = "esp"
-    bg.Size = UDim2.new(0, 80, 0, 20)
-    bg.StudsOffset = Vector3.new(0, 2.5, 0)
-    bg.AlwaysOnTop = true
-    bg.Parent = p
+local bg = Instance.new("BillboardGui")
+bg.Name = "esp"
+bg.Size = UDim2.new(0, 80, 0, 20)
+bg.StudsOffset = Vector3.new(0, 2.5, 0)
+bg.AlwaysOnTop = true
+bg.Parent = p
 
-    local label = Instance.new("TextLabel")
-    label.Size = UDim2.new(1, 0, 1, 0)
-    label.BackgroundTransparency = 1
-    label.Text = txt
-    label.TextColor3 = Color3.new(1, 1, 1)
-    label.TextScaled = true
-    label.Font = Enum.Font.Garamond
-    label.Parent = bg
+local label = Instance.new("TextLabel")
+label.Size = UDim2.new(1, 0, 1, 0)
+label.BackgroundTransparency = 1
+label.Text = txt
+label.TextColor3 = Color3.new(1, 1, 1)
+label.TextScaled = true
+label.Font = Enum.Font.Garamond
+label.Parent = bg
+
 end
 
-function DoGlow(part, name)
-    if part:FindFirstChild("myglow") then 
-        return 
-    end
+function DoGlow(part, name) if part:FindFirstChild("myglow") then return end
 
-    local h = Instance.new("Highlight")
-    h.Name = "myglow"
-    h.Parent = part
-    h.FillTransparency = 0.7
-    h.OutlineTransparency = 0.2
+local h = Instance.new("Highlight")
+h.Name = "myglow"
+h.Parent = part
+h.FillTransparency = 0.7
+h.OutlineTransparency = 0.2
 
-    h.FillColor = Color3.new(1, 1, 1)
-    h.OutlineColor = Color3.fromRGB(200, 200, 200)
+h.FillColor = Color3.new(1, 1, 1)
+h.OutlineColor = Color3.fromRGB(200, 200, 200)
 
-    makelabel(part, name)
+makelabel(part, name)
+
 end
 
-function FindStuff()
-    for i, v in pairs(workspace:GetChildren()) do
-        pcall(function()
-            if table.find(stuff2find, v.Name) then
-                if v:IsA("Model") and v.PrimaryPart then
-                    DoGlow(v.PrimaryPart, v.Name)
-                elseif v:IsA("Part") or v:IsA("MeshPart") then
-                    DoGlow(v, v.Name)
-                end
-            end
-        end)
-    end
+function FindStuff() for i, v in pairs(workspace:GetChildren()) do pcall(function() if table.find(stuff2find, v.Name) then if v:IsA("Model") and v.PrimaryPart then DoGlow(v.PrimaryPart, v.Name) elseif v:IsA("Part") or v:IsA("MeshPart") then DoGlow(v, v.Name) end end end) end
 
-    for i, v in pairs(workspace:GetDescendants()) do
-        if table.find(stuff2find, v.Name) and not v:IsDescendantOf(game.Players.LocalPlayer.Character) then
-            if v:IsA("Model") and v.PrimaryPart then
-                DoGlow(v.PrimaryPart, v.Name)
-            elseif v:IsA("Part") then
-                DoGlow(v, v.Name)
-            end
+for i, v in pairs(workspace:GetDescendants()) do
+    if table.find(stuff2find, v.Name) and not v:IsDescendantOf(game.Players.LocalPlayer.Character) then
+        if v:IsA("Model") and v.PrimaryPart then
+            DoGlow(v.PrimaryPart, v.Name)
+        elseif v:IsA("Part") then
+            DoGlow(v, v.Name)
         end
     end
 end
 
-rs.Heartbeat:Connect(function()
-    FindStuff()
-end)
+end
+
+rs.Heartbeat:Connect(function() FindStuff() end)
 
 print('esp loaded ok')
+
    end,
 })
 
