@@ -158,7 +158,7 @@ local Toggle = MainTab:CreateToggle({
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
       local rs = game:GetService("RunService")
-local stuff2find = { "Zombie", "Runner Zombie", "Banker Zombie", "Ironclad Zombie", "Dynamite Zombie", "Sheriff Zombie", "Zombie Soldier", "Captain Prescott", "Lab Zombie", "Outlaw", "Rifle Outlaw", "Shotgun Outlaw", "Dynamite Outlaw", "Werewolf", "Vampire", "Wolf", "Bear", "Snake", "Tesla Coil", "Tesla Turret", "Tesla Bot", "Nikola Tesla" }
+local stuff2find = { "Zombie", "Runner Zombie", "Banker Zombie", "Ironclad Zombie", "Dynamite Zombie", "Sheriff Zombie", "Zombie Soldier", "Captain Prescott", "Lab Zombie", "Outlaw", "Rifle Outlaw", "Shotgun Outlaw", "Dynamite Outlaw", "Werewolf", "Vampire", "Wolf", "Tesla Coil", "Tesla Turret", "Tesla Bot", "Nikola Tesla" }
 
 function makelabel(p, txt) if p:FindFirstChild("esp") then return end
 
