@@ -101,50 +101,31 @@ local Toggle = MainTab:CreateToggle({
    CurrentValue = false,
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
-      local rs = game:GetService("RunService")
-local replicatedStorage = game:GetService("ReplicatedStorage")
-local player = game.Players.LocalPlayer
+      local rs = local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
-local humanoidRootPart = character:WaitForChild("HumanoidRootPart") -- Get player's position
-local teleportRange = 50 -- Maximum teleport distance
+local rs = game:GetService("RunService")
 
--- Create a RemoteEvent if it doesn't exist
-local teleportEvent = replicatedStorage:FindFirstChild("TeleportRequest")
-if not teleportEvent then
-    teleportEvent = Instance.new("RemoteEvent")
-    teleportEvent.Name = "TeleportRequest"
-    teleportEvent.Parent = replicatedStorage
-end
+-- List of bond names to collect
+local bondNames = { "Bond", }
 
--- Function to find the nearest "Bond" model
-local function teleportToBond()
-    local closestBond = nil
-    local shortestDistance = math.huge
-
-    for _, model in pairs(workspace:GetChildren()) do
-        if model:IsA("Model") and model.Name == "Bond" then -- Only target "Bond" models
-            local partInside = model:FindFirstChildWhichIsA("BasePart")
-            if partInside then
-                local distance = (partInside.Position - humanoidRootPart.Position).Magnitude
-                if distance < shortestDistance and distance <= teleportRange then
-                    closestBond = partInside.Position
-                    shortestDistance = distance
+-- Function to check and collect bonds
+local function collectBonds()
+    for _, bond in pairs(workspace:GetChildren()) do
+        if table.find(bondNames, bond.Name) and bond:IsA("Model") then
+            local bondPart = bond:FindFirstChild("TouchPart") or bond:FindFirstChild("Main") or bond:FindFirstChild("Handle")
+            if bondPart then
+                local distance = (character.HumanoidRootPart.Position - bondPart.Position).Magnitude
+                if distance < 30 then -- Auto-pickup range set to 30 studs
+                    firetouchinterest(character.HumanoidRootPart, bondPart, 0) -- Simulate touch
+                    firetouchinterest(character.HumanoidRootPart, bondPart, 1)
                 end
             end
         end
     end
-
-    -- Teleport player if a "Bond" is found
-    if closestBond then
-        humanoidRootPart.CFrame = CFrame.new(closestBond + Vector3.new(0, 3, 0)) -- Slightly above
-    end
 end
 
--- Run auto teleport every second using RunService
-rs.RenderStepped:Connect(function()
-    teleportToBond()
-    task.wait(1) -- Adjust teleport interval
-end)
+-- Continuously run the auto-collect script
+rs.RenderStepped:Connect(collectBonds)
    end,
 })
 
