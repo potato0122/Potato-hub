@@ -352,8 +352,57 @@ local Toggle = MiscTab:CreateToggle({
    CurrentValue = false,
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
-   -- The function that takes place when the toggle is pressed
-   -- The variable (Value) is a boolean on whether the toggle is true or false
+   -- Services
+local rs = game:GetService("RunService") -- Get RunService
+local player = game.Players.LocalPlayer -- Get the player
+
+-- GUI Setup
+local moneyGUI = player:WaitForChild("PlayerGui"):FindFirstChild("MoneyGUI")
+local moneyText = moneyGUI and moneyGUI:FindFirstChild("Money")
+
+-- Collection Settings
+local collectionDistance = 10 -- Max distance to collect money
+
+-- Function to get the MoneyBag's value from BillboardGui
+local function getMoneyBagValue(moneyBag)
+    local billboard = moneyBag:FindFirstChild("BillboardGui")
+    if billboard then
+        local textLabel = billboard:FindFirstChild("TextLabel")
+        if textLabel then
+            local moneyAmount = tonumber(textLabel.Text) -- Convert text to number
+            return moneyAmount or 1 -- Default to 1 if conversion fails
+        end
+    end
+    return 1 -- Default if no GUI found
+end
+
+-- Auto-collect function
+local function collectMoney()
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+
+    if humanoidRootPart and moneyText then
+        for _, moneyBag in pairs(workspace:GetChildren()) do
+            if moneyBag:IsA("Model") and moneyBag.Name == "MoneyBag" then
+                local moneyRoot = moneyBag:FindFirstChild("HumanoidRootPart")
+
+                if moneyRoot and (humanoidRootPart.Position - moneyRoot.Position).Magnitude <= collectionDistance then
+                    local currentMoney = tonumber(moneyText.Text) or 0
+                    local amount = getMoneyBagValue(moneyBag) -- Get value from BillboardGui
+                    moneyText.Text = tostring(currentMoney + amount) -- Update Money GUI
+
+                    print("Collected", amount, "money from", moneyBag.Name)
+
+                    -- Remove the money bag from the game
+                    moneyBag:Destroy()
+                end
+            end
+        end
+    end
+end
+
+-- Run auto-collect every frame
+rs.Heartbeat:Connect(collectMoney)
    end,
 })
 
