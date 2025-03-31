@@ -221,8 +221,42 @@ local Toggle = InteTab:CreateToggle({
    CurrentValue = false,
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
-   -- The function that takes place when the toggle is pressed
-   -- The variable (Value) is a boolean on whether the toggle is true or false
+   local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local rs = game:GetService("RunService")
+local damageAmount = 25
+local auraRange = 30
+local enemies = { 
+    "Walker", "Runner", "Banker", "Ironclad", "Dynamite", 
+    "SheriffZombie", "Lab", "Outlaws", "Werewolf", "Vampire", 
+    "Wolf", "Nikola Tesla" 
+}
+
+local tool = character:FindFirstChild("Shovel") -- Ensure the player has the shovel
+local mouse = player:GetMouse()
+
+local function applyKillAura()
+    local root = character:FindFirstChild("HumanoidRootPart")
+    if not root then return end
+
+    for _, enemy in pairs(workspace:GetChildren()) do
+        if table.find(enemies, enemy.Name) and enemy:IsA("Model") then
+            local enemyRoot = enemy:FindFirstChild("HumanoidRootPart")
+            if enemyRoot then
+                local distance = (root.Position - enemyRoot.Position).Magnitude
+                if distance <= auraRange then
+                    -- Simulate mouse click on the enemy when within range
+                    if tool then
+                        mouse.Button1Down:Fire()  -- Simulate Left Mouse Click
+                    end
+                end
+            end
+        end
+    end
+end
+
+-- Run the kill aura every frame
+rs.RenderStepped:Connect(applyKillAura)
    end,
 })
 
