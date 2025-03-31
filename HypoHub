@@ -42,61 +42,57 @@ local Toggle = MainTab:CreateToggle({
    CurrentValue = false,
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
-   local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local RunService = game:GetService("RunService")
-local Players = game:GetService("Players")
-local UserInputService = game:GetService("UserInputService")
-local Camera = workspace.CurrentCamera
+   local rs = game:GetService("RunService")
+local camera = game.Workspace.CurrentCamera
+local player = game.Players.LocalPlayer
 
-local AIM_SNAP_RADIUS = 3
-local AIM_SMOOTHNESS = 0.2
+-- List of enemies/entities to target
+local stuff2find = { 
+    "Walker", "Runner", "Banker", "Ironclad", "Dynamite", 
+    "SheriffZombie", "Lab", "Outlaws", "Werewolf", "Vampire", 
+    "Wolf", "Nikola Tesla" 
+}
 
--- Function to find the nearest enemy's head within the aim radius
-local function findClosestHeadToCrosshair()
-    local closestHead = nil
-    local smallestDistance = math.huge
+-- Function to get the target part of an enemy (Head or HumanoidRootPart)
+local function getTargetPart(enemy)
+    if enemy:FindFirstChild("Head") then
+        return enemy.Head
+    elseif enemy:FindFirstChild("HumanoidRootPart") then
+        return enemy.HumanoidRootPart
+    end
+    return nil
+end
 
-    for _, enemy in pairs(Players:GetPlayers()) do
-        if enemy ~= Players.LocalPlayer and enemy.Character then
-            local head = enemy.Character:FindFirstChild("Head")
-            
-            if head then
-                local headScreenPos, onScreen = Camera:WorldToScreenPoint(head.Position)
-                
-                if onScreen then
-                    local mousePos = UserInputService:GetMouseLocation()
-                    local distanceToCrosshair = (Vector2.new(headScreenPos.X, headScreenPos.Y) - mousePos).Magnitude
+-- Function to find the nearest enemy
+local function getNearestEnemy()
+    local nearestEnemy = nil
+    local shortestDistance = math.huge
 
-                    if distanceToCrosshair < AIM_SNAP_RADIUS and distanceToCrosshair < smallestDistance then
-                        smallestDistance = distanceToCrosshair
-                        closestHead = head
-                    end
+    for _, v in pairs(workspace:GetChildren()) do
+        if table.find(stuff2find, v.Name) and v:IsA("Model") then
+            local targetPart = getTargetPart(v)
+            if targetPart then
+                local distance = (player.Character.HumanoidRootPart.Position - targetPart.Position).Magnitude
+                if distance < shortestDistance then
+                    shortestDistance = distance
+                    nearestEnemy = targetPart
                 end
             end
         end
     end
-
-    return closestHead
+    return nearestEnemy
 end
 
--- Function to smoothly aim at the target head
-local function aimAtTarget(targetHead)
-    if targetHead and Camera then
-        local direction = (targetHead.Position - Camera.CFrame.Position).unit
-        local newCFrame = CFrame.new(Camera.CFrame.Position, Camera.CFrame.Position + direction)
-
-        -- Smoothly adjust camera
-        Camera.CFrame = Camera.CFrame:Lerp(newCFrame, AIM_SMOOTHNESS)
+-- Auto-aim function
+local function autoAim()
+    local target = getNearestEnemy()
+    if target then
+        camera.CFrame = CFrame.lookAt(camera.CFrame.Position, target.Position)
     end
 end
 
--- Continuously run aim assist
-RunService.RenderStepped:Connect(function()
-    local targetHead = findClosestHeadToCrosshair()
-    if targetHead then
-        aimAtTarget(targetHead)
-    end
-end)
+-- Run the auto-aim continuously
+rs.RenderStepped:Connect(autoAim)
    end,
 })
 
