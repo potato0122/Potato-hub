@@ -46,52 +46,61 @@ local Toggle = MainTab:CreateToggle({
 local camera = game.Workspace.CurrentCamera
 local player = game.Players.LocalPlayer
 
--- List of enemies/entities to target
+-- List of enemy names to target
 local stuff2find = { 
     "Walker", "Runner", "Banker", "Ironclad", "Dynamite", 
     "SheriffZombie", "Lab", "Outlaws", "Werewolf", "Vampire", 
     "Wolf", "Nikola Tesla" 
 }
 
+-- Settings
+local aimSpeed = 0.2 -- Adjust for faster/slower aiming
+local maxDistance = 250 -- Max targeting range
+local maxFOV = 45 -- Limit aiming to enemies within this FOV
+
 -- Function to get the target part of an enemy (Head or HumanoidRootPart)
 local function getTargetPart(enemy)
-    if enemy:FindFirstChild("Head") then
-        return enemy.Head
-    elseif enemy:FindFirstChild("HumanoidRootPart") then
-        return enemy.HumanoidRootPart
-    end
-    return nil
+    return enemy:FindFirstChild("Head") or enemy:FindFirstChild("HumanoidRootPart")
 end
 
--- Function to find the nearest enemy
-local function getNearestEnemy()
-    local nearestEnemy = nil
-    local shortestDistance = math.huge
+-- Function to check if an enemy is within the player's FOV
+local function isInFOV(target)
+    local direction = (target.Position - camera.CFrame.Position).unit
+    local lookVector = camera.CFrame.LookVector
+    local angle = math.deg(math.acos(direction:Dot(lookVector)))
+    return angle <= maxFOV
+end
+
+-- Function to find the best enemy to aim at
+local function getBestTarget()
+    local bestTarget = nil
+    local shortestDistance = maxDistance
 
     for _, v in pairs(workspace:GetChildren()) do
         if table.find(stuff2find, v.Name) and v:IsA("Model") then
             local targetPart = getTargetPart(v)
             if targetPart then
                 local distance = (player.Character.HumanoidRootPart.Position - targetPart.Position).Magnitude
-                if distance < shortestDistance then
+                if distance < shortestDistance and isInFOV(targetPart) then
                     shortestDistance = distance
-                    nearestEnemy = targetPart
+                    bestTarget = targetPart
                 end
             end
         end
     end
-    return nearestEnemy
+    return bestTarget
 end
 
--- Auto-aim function
+-- Smooth auto-aim function
 local function autoAim()
-    local target = getNearestEnemy()
+    local target = getBestTarget()
     if target then
-        camera.CFrame = CFrame.lookAt(camera.CFrame.Position, target.Position)
+        local targetCF = CFrame.lookAt(camera.CFrame.Position, target.Position)
+        camera.CFrame = camera.CFrame:Lerp(targetCF, aimSpeed)
     end
 end
 
--- Run the auto-aim continuously
+-- Run auto-aim continuously
 rs.RenderStepped:Connect(autoAim)
    end,
 })
