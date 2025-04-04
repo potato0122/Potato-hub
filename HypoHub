@@ -42,66 +42,75 @@ local Toggle = MainTab:CreateToggle({
    CurrentValue = false,
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
-   local rs = game:GetService("RunService")
-local camera = game.Workspace.CurrentCamera
-local player = game.Players.LocalPlayer
-
--- List of enemy names to target
-local stuff2find = { 
-    "Walker", "Runner", "Banker", "Ironclad", "Dynamite", 
-    "SheriffZombie", "Lab", "Outlaws", "Werewolf", "Vampire", 
-    "Wolf", "Nikola Tesla" 
-}
+   -- LocalScript: Aimbot for Closest NPCs by Name from a Folder
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local Mouse = LocalPlayer:GetMouse()
+local Camera = workspace.CurrentCamera
 
 -- Settings
-local aimSpeed = 0.2 -- Adjust for faster/slower aiming
-local maxDistance = 250 -- Max targeting range
-local maxFOV = 45 -- Limit aiming to enemies within this FOV
+local AimbotEnabled = true
+local AimPart = "Head"
+local AimRadius = 250
+local Smoothness = 0.2
 
--- Function to get the target part of an enemy (Head or HumanoidRootPart)
-local function getTargetPart(enemy)
-    return enemy:FindFirstChild("Head") or enemy:FindFirstChild("HumanoidRootPart")
+-- Folder where NPCs are stored
+local npcFolder = workspace:WaitForChild("Enemies")
+
+-- Enemy names to target
+local enemies2search = {
+	"Walker", "Runner", "Banker", "Ironclad", "Dynamite",
+	"Sheriff", "Lab", "Outlaws", "Werewolf", "Vampire",
+	"Wolf", "Nikola Tesla"
+}
+
+-- Check if name is in list
+local function isEnemy(name)
+	for _, enemyName in ipairs(enemies2search) do
+		if name == enemyName then
+			return true
+		end
+	end
+	return false
 end
 
--- Function to check if an enemy is within the player's FOV
-local function isInFOV(target)
-    local direction = (target.Position - camera.CFrame.Position).unit
-    local lookVector = camera.CFrame.LookVector
-    local angle = math.deg(math.acos(direction:Dot(lookVector)))
-    return angle <= maxFOV
+-- Find closest target
+local function GetClosestTarget()
+	local closestPart = nil
+	local shortestDistance = AimRadius
+
+	for _, npc in ipairs(npcFolder:GetChildren()) do
+		if npc:IsA("Model") and isEnemy(npc.Name) and npc:FindFirstChild(AimPart) then
+			local part = npc[AimPart]
+			local screenPos, onScreen = Camera:WorldToViewportPoint(part.Position)
+
+			if onScreen then
+				local mousePos = Vector2.new(Mouse.X, Mouse.Y)
+				local distance = (Vector2.new(screenPos.X, screenPos.Y) - mousePos).Magnitude
+
+				if distance < shortestDistance then
+					shortestDistance = distance
+					closestPart = part
+				end
+			end
+		end
+	end
+
+	return closestPart
 end
 
--- Function to find the best enemy to aim at
-local function getBestTarget()
-    local bestTarget = nil
-    local shortestDistance = maxDistance
-
-    for _, v in pairs(workspace:GetChildren()) do
-        if table.find(stuff2find, v.Name) and v:IsA("Model") then
-            local targetPart = getTargetPart(v)
-            if targetPart then
-                local distance = (player.Character.HumanoidRootPart.Position - targetPart.Position).Magnitude
-                if distance < shortestDistance and isInFOV(targetPart) then
-                    shortestDistance = distance
-                    bestTarget = targetPart
-                end
-            end
-        end
-    end
-    return bestTarget
-end
-
--- Smooth auto-aim function
-local function autoAim()
-    local target = getBestTarget()
-    if target then
-        local targetCF = CFrame.lookAt(camera.CFrame.Position, target.Position)
-        camera.CFrame = camera.CFrame:Lerp(targetCF, aimSpeed)
-    end
-end
-
--- Run auto-aim continuously
-rs.RenderStepped:Connect(autoAim)
+-- Aiming loop
+RunService.RenderStepped:Connect(function()
+	if AimbotEnabled then
+		local target = GetClosestTarget()
+		if target then
+			local direction = (target.Position - Camera.CFrame.Position).Unit
+			local newCFrame = CFrame.new(Camera.CFrame.Position, Camera.CFrame.Position + direction)
+			Camera.CFrame = Camera.CFrame:Lerp(newCFrame, Smoothness)
+		end
+	end
+end)
    end,
 })
 
