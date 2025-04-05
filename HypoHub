@@ -4,7 +4,7 @@ local Window = Rayfield:CreateWindow({
    Name = "🔥 Dead Rails Hub 🔥",
    Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
    LoadingTitle = "🔐Dead Rails Key System🔐",
-   LoadingSubtitle = "by anonymous",
+   LoadingSubtitle = "Luscr",
    Theme = "AmberGlow", -- Check https://docs.sirius.menu/rayfield/configuration/themes
 
    DisableRayfieldPrompts = false,
@@ -296,12 +296,45 @@ local MiscTab = Window:CreateTab("Misc", nil) -- Title, Image
 local MiscSection = MiscTab:CreateSection("Misc")
 
 local Toggle = MiscTab:CreateToggle({
-   Name = "Auto Fuel",
+   Name = "Noclip",
    CurrentValue = false,
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
-   -- The function that takes place when the toggle is pressed
-   -- The variable (Value) is a boolean on whether the toggle is true or false
+   -- Advanced Noclip Script (LocalScript)
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local noclipEnabled = false
+
+-- Function to handle noclip logic
+local function toggleNoclip()
+	noclipEnabled = not noclipEnabled
+	if noclipEnabled then
+		print("[Noclip] Enabled")
+	else
+		print("[Noclip] Disabled")
+	end
+end
+
+-- Keybind to toggle noclip (Default: 'N')
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+	if gameProcessed then return end
+	if input.KeyCode == Enum.KeyCode.N then
+		toggleNoclip()
+	end
+end)
+
+-- Core noclip loop
+RunService.Stepped:Connect(function()
+	if noclipEnabled and character then
+		for _, part in pairs(character:GetDescendants()) do
+			if part:IsA("BasePart") and part.CanCollide then
+				part.CanCollide = false
    end,
 })
 
