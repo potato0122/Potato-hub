@@ -344,65 +344,43 @@ local Toggle = MiscTab:CreateToggle({
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
    -- Services
-local rs = game:GetService("RunService") -- Get RunService
-local player = game.Players.LocalPlayer -- Get the player
+local rs = game:GetService("RunService")
+local player = game.Players.LocalPlayer
+local validTargets = {}
+local dist = 10
 
--- Settings
-local collectionDistance = 10 -- Max distance to collect corpses
-local sackToolName = "Sack" -- The name of the tool used for collecting
+local function getTargets()
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:FindFirstChild("HumanoidRootPart")
 
--- List of valid corpses that have a sell value
-local validCorpses = {
-    ["Vampire"] = true,
-    ["Werewolf"] = true,
-    ["Outlaw"] = true,
-    ["Unicorn"] = true,
-    ["Captain Prescott"] = true,
-    ["Nikola Tesla"] = true
-}
-
--- Function to get the player's Sack tool
-local function getSackTool()
-    if player.Backpack:FindFirstChild(sackToolName) then
-        return player.Backpack:FindFirstChild(sackToolName)
-    elseif player.Character and player.Character:FindFirstChild(sackToolName) then
-        return player.Character:FindFirstChild(sackToolName)
-    end
-    return nil
-end
-
--- Auto-collect function
-local function collectCorpses()
-    local character = player.Character or player.CharacterAdded:Wait()
-    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
-    local sack = getSackTool() -- Get Sack tool
-
-    if humanoidRootPart and sack then
-        for _, corpse in pairs(workspace:GetChildren()) do
-            if validCorpses[corpse.Name] and corpse:IsA("Model") then
-                local corpseRoot = corpse:FindFirstChild("HumanoidRootPart")
-
-                if corpseRoot and (humanoidRootPart.Position - corpseRoot.Position).Magnitude <= collectionDistance then
-                    print("Collecting corpse:", corpse.Name)
-
-                    -- Move corpse inside the Sack tool
-                    local collectedFolder = sack:FindFirstChild("CollectedCorpses")
-                    if not collectedFolder then
-                        collectedFolder = Instance.new("Folder")
-                        collectedFolder.Name = "CollectedCorpses"
-                        collectedFolder.Parent = sack
-                    end
-                    
-                    corpse.Parent = collectedFolder -- Store corpse in Sack
-                    corpse:SetPrimaryPartCFrame(sack.Handle.CFrame * CFrame.new(0, #collectedFolder:GetChildren(), 0))
+    if hrp then
+        for _, item in pairs(workspace:GetChildren()) do
+            if item:IsA("Model") and item:FindFirstChild("Humanoid") then
+                local hum = item.Humanoid
+                if hum and hum.Health <= 0 and (hrp.Position - item.HumanoidRootPart.Position).Magnitude <= dist then
+                    table.insert(validTargets, item)
                 end
             end
         end
     end
 end
 
--- Run auto-collect every frame
-rs.Heartbeat:Connect(collectCorpses)
+local function sendToServer(target)
+    local args = {
+        [1] = target
+    }
+    game:GetService("ReplicatedStorage").Remotes.StoreItem:FireServer(unpack(args))
+end
+
+local function processTargets()
+    validTargets = {}
+    getTargets()
+    for _, target in pairs(validTargets) do
+        sendToServer(target)
+    end
+end
+
+rs.Heartbeat:Connect(processTargets)
    end,
 })
 
