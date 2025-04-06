@@ -568,71 +568,55 @@ local Toggle = MiscTab:CreateToggle({
    CurrentValue = false,
    Flag = "Toggle2", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
-   local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-local Workspace = game:GetService("Workspace")
+   local p, rs, ws = game:GetService("Players"), game:GetService("RunService"), game:GetService("Workspace")
+local lp = p.LocalPlayer
+local c = lp.Character or lp.CharacterAdded:Wait()
+local h = c:WaitForChild("Humanoid")
+local r = c:WaitForChild("HumanoidRootPart")
+local d = Vector3.new(-424.39, 27.5, -49040.54)
 
-local LocalPlayer = Players.LocalPlayer
-local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-local Humanoid = Character:WaitForChild("Humanoid")
-local RootPart = Character:WaitForChild("HumanoidRootPart")
-
--- Target destination position
-local TargetPosition = Vector3.new(-424.39, 27.5, -49040.54)
-
--- Function to find the nearest available seat
-local function GetNearestSeat()
-	local nearestSeat = nil
-	local shortestDistance = math.huge
-
-	for _, obj in ipairs(Workspace:GetDescendants()) do
-		if (obj:IsA("Seat") or obj:IsA("VehicleSeat")) and not obj.Occupant then
-			local distance = (obj.Position - TargetPosition).Magnitude
-			if distance < 50 and distance < shortestDistance then
-				shortestDistance = distance
-				nearestSeat = obj
-			end
-		end
-	end
-
-	return nearestSeat
+local function g()
+    local s, m = nil, math.huge
+    for _, v in next, ws:GetDescendants() do
+        if (v:IsA("Seat") or v:IsA("VehicleSeat")) and not v.Occupant then
+            local dist = (v.Position - d).Magnitude
+            if dist < 50 and dist < m then
+                m, s = dist, v
+            end
+        end
+    end
+    return s
 end
 
-local seated = false
-local connection
+local seated, con = false, nil
+con = rs.Heartbeat:Connect(function()
+    if not (c and h and r) then return end
 
-connection = RunService.Heartbeat:Connect(function()
-	if not (Character and Humanoid and RootPart) then return end
+    local sp = h.SeatPart
+    if h.Sit and sp and (sp:IsA("Seat") or sp:IsA("VehicleSeat")) then
+        if not seated then
+            seated = true
+            task.delay(1, function()
+                if con.Connected then
+                    con:Disconnect()
+                end
+            end)
+        end
+        return
+    end
 
-	local seatPart = Humanoid.SeatPart
+    r.CFrame = CFrame.new(d)
 
-	-- If already seated, stop the script after 1 second
-	if Humanoid.Sit and seatPart and (seatPart:IsA("Seat") or seatPart:IsA("VehicleSeat")) then
-		if not seated then
-			seated = true
-			task.delay(1, function()
-				if connection.Connected then
-					connection:Disconnect()
-				end
-			end)
-		end
-		return
-	end
-
-	-- Move to the target location
-	RootPart.CFrame = CFrame.new(TargetPosition)
-
-	-- Try to sit in the nearest seat
-	local nearestSeat = GetNearestSeat()
-	if nearestSeat then
-		local seatPosition = nearestSeat.Position
-		RootPart.CFrame = CFrame.new(seatPosition.X, seatPosition.Y - 0.2, seatPosition.Z)
-		task.defer(function()
-			pcall(function()
-				nearestSeat:Sit(Humanoid)
-			end)
-		end)
-	end
+    local n = g()
+    if n then
+        local p = n.Position
+        r.CFrame = CFrame.new(p.X, p.Y - 0.2, p.Z)
+        task.defer(function()
+            pcall(function()
+                n:Sit(h)
+            end)
+        end)
+    end
 end)
    end,
 })
