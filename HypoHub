@@ -568,7 +568,71 @@ local Toggle = MiscTab:CreateToggle({
    CurrentValue = false,
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
-   -- The function that takes place when the toggle is pressed
-   -- The variable (Value) is a boolean on whether the toggle is true or false
+   local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+local Humanoid = Character:WaitForChild("Humanoid")
+local RootPart = Character:WaitForChild("HumanoidRootPart")
+
+-- Target destination position
+local TargetPosition = Vector3.new(-424.39, 27.5, -49040.54)
+
+-- Function to find the nearest available seat
+local function GetNearestSeat()
+	local nearestSeat = nil
+	local shortestDistance = math.huge
+
+	for _, obj in ipairs(Workspace:GetDescendants()) do
+		if (obj:IsA("Seat") or obj:IsA("VehicleSeat")) and not obj.Occupant then
+			local distance = (obj.Position - TargetPosition).Magnitude
+			if distance < 50 and distance < shortestDistance then
+				shortestDistance = distance
+				nearestSeat = obj
+			end
+		end
+	end
+
+	return nearestSeat
+end
+
+local seated = false
+local connection
+
+connection = RunService.Heartbeat:Connect(function()
+	if not (Character and Humanoid and RootPart) then return end
+
+	local seatPart = Humanoid.SeatPart
+
+	-- If already seated, stop the script after 1 second
+	if Humanoid.Sit and seatPart and (seatPart:IsA("Seat") or seatPart:IsA("VehicleSeat")) then
+		if not seated then
+			seated = true
+			task.delay(1, function()
+				if connection.Connected then
+					connection:Disconnect()
+				end
+			end)
+		end
+		return
+	end
+
+	-- Move to the target location
+	RootPart.CFrame = CFrame.new(TargetPosition)
+
+	-- Try to sit in the nearest seat
+	local nearestSeat = GetNearestSeat()
+	if nearestSeat then
+		local seatPosition = nearestSeat.Position
+		RootPart.CFrame = CFrame.new(seatPosition.X, seatPosition.Y - 0.2, seatPosition.Z)
+		task.defer(function()
+			pcall(function()
+				nearestSeat:Sit(Humanoid)
+			end)
+		end)
+	end
+end)
    end,
 })
