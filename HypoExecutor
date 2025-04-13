@@ -1,0 +1,1717 @@
+-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
+
+local Settings = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local SettingsButtonDrag = Instance.new("Frame")
+local SettingsButtonFrame = Instance.new("Frame")
+local UICorner = Instance.new("UICorner")
+local TextLabel = Instance.new("TextLabel")
+local Button = Instance.new("TextButton")
+local Sample = Instance.new("ImageLabel")
+local SettingsGui = Instance.new("Frame")
+local UICorner_2 = Instance.new("UICorner")
+local Settings_2 = Instance.new("Frame")
+local UICorner_3 = Instance.new("UICorner")
+local Performance = Instance.new("Frame")
+local Shadows = Instance.new("Frame")
+local Text = Instance.new("TextLabel")
+local WhiteBar = Instance.new("Frame")
+local UIGradient = Instance.new("UIGradient")
+local Slider = Instance.new("Frame")
+local UICorner_4 = Instance.new("UICorner")
+local SliderCircle = Instance.new("Frame")
+local UICorner_5 = Instance.new("UICorner")
+local Button_2 = Instance.new("TextButton")
+local UIGradient_2 = Instance.new("UIGradient")
+local Sample_2 = Instance.new("ImageLabel")
+local OnOrOff = Instance.new("TextLabel")
+local UICorner_6 = Instance.new("UICorner")
+local UIGradient_3 = Instance.new("UIGradient")
+local Reflections = Instance.new("Frame")
+local Text_2 = Instance.new("TextLabel")
+local WhiteBar_2 = Instance.new("Frame")
+local UIGradient_4 = Instance.new("UIGradient")
+local Slider_2 = Instance.new("Frame")
+local UICorner_7 = Instance.new("UICorner")
+local SliderCircle_2 = Instance.new("Frame")
+local UICorner_8 = Instance.new("UICorner")
+local Button_3 = Instance.new("TextButton")
+local UIGradient_5 = Instance.new("UIGradient")
+local Sample_3 = Instance.new("ImageLabel")
+local OnOrOff_2 = Instance.new("TextLabel")
+local UICorner_9 = Instance.new("UICorner")
+local UIGradient_6 = Instance.new("UIGradient")
+local Diffuse = Instance.new("Frame")
+local Text_3 = Instance.new("TextLabel")
+local WhiteBar_3 = Instance.new("Frame")
+local UIGradient_7 = Instance.new("UIGradient")
+local Slider_3 = Instance.new("Frame")
+local UICorner_10 = Instance.new("UICorner")
+local SliderCircle_3 = Instance.new("Frame")
+local UICorner_11 = Instance.new("UICorner")
+local Button_4 = Instance.new("TextButton")
+local UIGradient_8 = Instance.new("UIGradient")
+local Sample_4 = Instance.new("ImageLabel")
+local OnOrOff_3 = Instance.new("TextLabel")
+local UICorner_12 = Instance.new("UICorner")
+local UIGradient_9 = Instance.new("UIGradient")
+local Gameplay = Instance.new("Frame")
+local FOV = Instance.new("Frame")
+local Text_4 = Instance.new("TextLabel")
+local WhiteBar_4 = Instance.new("Frame")
+local UIGradient_10 = Instance.new("UIGradient")
+local UICorner_13 = Instance.new("UICorner")
+local FOVConfig = Instance.new("Frame")
+local UICorner_14 = Instance.new("UICorner")
+local SetFOV = Instance.new("Frame")
+local UICorner_15 = Instance.new("UICorner")
+local Button_5 = Instance.new("TextButton")
+local Text_5 = Instance.new("TextLabel")
+local UIGradient_11 = Instance.new("UIGradient")
+local Sample_5 = Instance.new("ImageLabel")
+local FOVSet = Instance.new("TextBox")
+local UIGradient_12 = Instance.new("UIGradient")
+local SettingsOptions = Instance.new("Frame")
+local UICorner_16 = Instance.new("UICorner")
+local Performance_2 = Instance.new("Frame")
+local UICorner_17 = Instance.new("UICorner")
+local Button_6 = Instance.new("TextButton")
+local Text_6 = Instance.new("TextLabel")
+local UIGradient_13 = Instance.new("UIGradient")
+local Sample_6 = Instance.new("ImageLabel")
+local Gameplay_2 = Instance.new("Frame")
+local UICorner_18 = Instance.new("UICorner")
+local Button_7 = Instance.new("TextButton")
+local Text_7 = Instance.new("TextLabel")
+local UIGradient_14 = Instance.new("UIGradient")
+local Sample_7 = Instance.new("ImageLabel")
+local TextLabel_2 = Instance.new("TextLabel")
+
+--Properties:
+
+Settings.Name = "Settings"
+Settings.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+Settings.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+Settings.ResetOnSpawn = false
+
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = Settings
+MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+MainFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+MainFrame.BackgroundTransparency = 1.000
+MainFrame.BorderColor3 = Color3.fromRGB(27, 42, 53)
+MainFrame.BorderSizePixel = 0
+MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+MainFrame.Size = UDim2.new(1, 0, 1, 0)
+
+SettingsButtonDrag.Name = "SettingsButtonDrag"
+SettingsButtonDrag.Parent = MainFrame
+SettingsButtonDrag.AnchorPoint = Vector2.new(0.5, 0.5)
+SettingsButtonDrag.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+SettingsButtonDrag.BackgroundTransparency = 0.800
+SettingsButtonDrag.BorderColor3 = Color3.fromRGB(27, 42, 53)
+SettingsButtonDrag.BorderSizePixel = 0
+SettingsButtonDrag.Position = UDim2.new(0.0400710925, 0, 0.499983281, 0)
+SettingsButtonDrag.Size = UDim2.new(0.0715484396, 0, 0.0431656912, 0)
+SettingsButtonDrag.ZIndex = 2
+
+SettingsButtonFrame.Name = "SettingsButtonFrame"
+SettingsButtonFrame.Parent = SettingsButtonDrag
+SettingsButtonFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+SettingsButtonFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+SettingsButtonFrame.BorderColor3 = Color3.fromRGB(27, 42, 53)
+SettingsButtonFrame.BorderSizePixel = 0
+SettingsButtonFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+SettingsButtonFrame.Size = UDim2.new(1, 0, 1, 0)
+
+UICorner.CornerRadius = UDim.new(0.321981192, 0)
+UICorner.Parent = SettingsButtonFrame
+
+TextLabel.Parent = SettingsButtonFrame
+TextLabel.AnchorPoint = Vector2.new(0.5, 0.5)
+TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.BackgroundTransparency = 1.000
+TextLabel.BorderColor3 = Color3.fromRGB(27, 42, 53)
+TextLabel.Position = UDim2.new(0.5, 0, 0.5, 0)
+TextLabel.Size = UDim2.new(0.896939278, 0, 0.642237127, 0)
+TextLabel.Font = Enum.Font.Unknown
+TextLabel.Text = "HypoHub"
+TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.TextScaled = true
+TextLabel.TextSize = 14.000
+TextLabel.TextWrapped = true
+
+Button.Name = "Button"
+Button.Parent = SettingsButtonFrame
+Button.AnchorPoint = Vector2.new(0.5, 0.5)
+Button.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Button.BackgroundTransparency = 1.000
+Button.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Button.Position = UDim2.new(0.5, 0, 0.5, 0)
+Button.Size = UDim2.new(1, 0, 1, 0)
+Button.Font = Enum.Font.SourceSans
+Button.Text = ""
+Button.TextColor3 = Color3.fromRGB(0, 0, 0)
+Button.TextSize = 14.000
+
+Sample.Name = "Sample"
+Sample.Parent = game.StarterGui.Settings.MainFrame.SettingsButtonDrag.SettingsButtonFrame.Animations
+Sample.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Sample.BackgroundTransparency = 1.000
+Sample.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Sample.Image = "http://www.roblox.com/asset/?id=4560909609"
+Sample.ImageTransparency = 0.600
+
+SettingsGui.Name = "SettingsGui"
+SettingsGui.Parent = MainFrame
+SettingsGui.AnchorPoint = Vector2.new(0.5, 0.5)
+SettingsGui.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+SettingsGui.BorderColor3 = Color3.fromRGB(27, 42, 53)
+SettingsGui.BorderSizePixel = 0
+SettingsGui.Position = UDim2.new(0.5, 0, 0.5, 0)
+SettingsGui.Size = UDim2.new(0.556019008, 0, 0.66942662, 0)
+SettingsGui.Visible = false
+
+UICorner_2.CornerRadius = UDim.new(0.0363332517, 0)
+UICorner_2.Parent = SettingsGui
+
+Settings_2.Name = "Settings"
+Settings_2.Parent = SettingsGui
+Settings_2.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+Settings_2.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Settings_2.BorderSizePixel = 0
+Settings_2.Position = UDim2.new(0.311253369, 0, 0.109132051, 0)
+Settings_2.Size = UDim2.new(0.675487757, 0, 0.869291782, 0)
+
+UICorner_3.CornerRadius = UDim.new(0.0238948632, 0)
+UICorner_3.Parent = Settings_2
+
+Performance.Name = "Performance"
+Performance.Parent = Settings_2
+Performance.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Performance.BackgroundTransparency = 1.000
+Performance.BorderSizePixel = 0
+Performance.Size = UDim2.new(1, 0, 1, 0)
+
+Shadows.Name = "Shadows"
+Shadows.Parent = Performance
+Shadows.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+Shadows.BorderSizePixel = 0
+Shadows.Position = UDim2.new(0.0172026698, 0, 0.0216406919, 0)
+Shadows.Size = UDim2.new(0.961720228, 0, 0.129346669, 0)
+
+Text.Name = "Text"
+Text.Parent = Shadows
+Text.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Text.BackgroundTransparency = 1.000
+Text.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Text.Position = UDim2.new(0.0355398506, 0, 0.238356799, 0)
+Text.Size = UDim2.new(0.346520901, 0, 0.515798748, 0)
+Text.ZIndex = 2
+Text.Font = Enum.Font.Gotham
+Text.Text = "Shadows"
+Text.TextColor3 = Color3.fromRGB(255, 255, 255)
+Text.TextScaled = true
+Text.TextSize = 14.000
+Text.TextWrapped = true
+
+WhiteBar.Name = "WhiteBar"
+WhiteBar.Parent = Shadows
+WhiteBar.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+WhiteBar.BorderColor3 = Color3.fromRGB(27, 42, 53)
+WhiteBar.BorderSizePixel = 0
+WhiteBar.Position = UDim2.new(0.390470713, 0, 0.14243333, 0)
+WhiteBar.Size = UDim2.new(0.00544419885, 0, 0.7058056, 0)
+
+UIGradient.Rotation = 90
+UIGradient.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 1.00), NumberSequenceKeypoint.new(0.20, 0.00), NumberSequenceKeypoint.new(0.80, 0.00), NumberSequenceKeypoint.new(1.00, 1.00)}
+UIGradient.Parent = WhiteBar
+
+Slider.Name = "Slider"
+Slider.Parent = Shadows
+Slider.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Slider.BorderSizePixel = 0
+Slider.Position = UDim2.new(0.761591733, 0, 0.117235519, 0)
+Slider.Size = UDim2.new(0.209398687, 0, 0.731003523, 0)
+
+UICorner_4.CornerRadius = UDim.new(1, 0)
+UICorner_4.Parent = Slider
+
+SliderCircle.Name = "SliderCircle"
+SliderCircle.Parent = Slider
+SliderCircle.AnchorPoint = Vector2.new(0.5, 0)
+SliderCircle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+SliderCircle.BorderSizePixel = 0
+SliderCircle.Position = UDim2.new(0.800000012, 0, 0.122296758, 0)
+SliderCircle.Size = UDim2.new(0.300999999, 0, 0.736791015, 0)
+
+UICorner_5.CornerRadius = UDim.new(1, 0)
+UICorner_5.Parent = SliderCircle
+
+Button_2.Name = "Button"
+Button_2.Parent = Slider
+Button_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Button_2.BackgroundTransparency = 1.000
+Button_2.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Button_2.Size = UDim2.new(1, 0, 1, 0)
+Button_2.ZIndex = 2
+Button_2.Font = Enum.Font.SourceSans
+Button_2.Text = " "
+Button_2.TextColor3 = Color3.fromRGB(0, 0, 0)
+Button_2.TextSize = 14.000
+
+UIGradient_2.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(207, 207, 207)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 255, 255))}
+UIGradient_2.Rotation = -90
+UIGradient_2.Parent = Slider
+
+Sample_2.Name = "Sample"
+Sample_2.Parent = game.StarterGui.Settings.MainFrame.SettingsGui.Settings.Performance.Shadows.Slider.Animations
+Sample_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Sample_2.BackgroundTransparency = 1.000
+Sample_2.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Sample_2.Image = "http://www.roblox.com/asset/?id=4560909609"
+Sample_2.ImageTransparency = 0.600
+
+OnOrOff.Name = "OnOrOff"
+OnOrOff.Parent = Shadows
+OnOrOff.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+OnOrOff.BackgroundTransparency = 1.000
+OnOrOff.BorderColor3 = Color3.fromRGB(27, 42, 53)
+OnOrOff.Position = UDim2.new(0.407741845, 0, 0.222495809, 0)
+OnOrOff.Size = UDim2.new(0.207884818, 0, 0.515798748, 0)
+OnOrOff.ZIndex = 2
+OnOrOff.Font = Enum.Font.Gotham
+OnOrOff.Text = "On"
+OnOrOff.TextColor3 = Color3.fromRGB(255, 255, 255)
+OnOrOff.TextScaled = true
+OnOrOff.TextSize = 14.000
+OnOrOff.TextWrapped = true
+
+UICorner_6.CornerRadius = UDim.new(0.200000003, 0)
+UICorner_6.Parent = Shadows
+
+UIGradient_3.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(207, 207, 207)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 255, 255))}
+UIGradient_3.Rotation = -90
+UIGradient_3.Parent = Shadows
+
+Reflections.Name = "Reflections"
+Reflections.Parent = Performance
+Reflections.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+Reflections.BorderSizePixel = 0
+Reflections.Position = UDim2.new(0.0196890328, 0, 0.171405092, 0)
+Reflections.Size = UDim2.new(0.961720228, 0, 0.129346654, 0)
+
+Text_2.Name = "Text"
+Text_2.Parent = Reflections
+Text_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Text_2.BackgroundTransparency = 1.000
+Text_2.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Text_2.Position = UDim2.new(0.0355398506, 0, 0.238356799, 0)
+Text_2.Size = UDim2.new(0.346520901, 0, 0.515798748, 0)
+Text_2.ZIndex = 2
+Text_2.Font = Enum.Font.Gotham
+Text_2.Text = "Reflections"
+Text_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+Text_2.TextScaled = true
+Text_2.TextSize = 14.000
+Text_2.TextWrapped = true
+
+WhiteBar_2.Name = "WhiteBar"
+WhiteBar_2.Parent = Reflections
+WhiteBar_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+WhiteBar_2.BorderColor3 = Color3.fromRGB(27, 42, 53)
+WhiteBar_2.BorderSizePixel = 0
+WhiteBar_2.Position = UDim2.new(0.390470713, 0, 0.14243333, 0)
+WhiteBar_2.Size = UDim2.new(0.00544419885, 0, 0.7058056, 0)
+
+UIGradient_4.Rotation = 90
+UIGradient_4.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 1.00), NumberSequenceKeypoint.new(0.20, 0.00), NumberSequenceKeypoint.new(0.80, 0.00), NumberSequenceKeypoint.new(1.00, 1.00)}
+UIGradient_4.Parent = WhiteBar_2
+
+Slider_2.Name = "Slider"
+Slider_2.Parent = Reflections
+Slider_2.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Slider_2.BorderSizePixel = 0
+Slider_2.Position = UDim2.new(0.760882854, 0, 0.11723543, 0)
+Slider_2.Size = UDim2.new(0.209398687, 0, 0.731003523, 0)
+
+UICorner_7.CornerRadius = UDim.new(1, 0)
+UICorner_7.Parent = Slider_2
+
+SliderCircle_2.Name = "SliderCircle"
+SliderCircle_2.Parent = Slider_2
+SliderCircle_2.AnchorPoint = Vector2.new(0.5, 0)
+SliderCircle_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+SliderCircle_2.BorderSizePixel = 0
+SliderCircle_2.Position = UDim2.new(0.800000012, 0, 0.122296758, 0)
+SliderCircle_2.Size = UDim2.new(0.300999999, 0, 0.736791015, 0)
+
+UICorner_8.CornerRadius = UDim.new(1, 0)
+UICorner_8.Parent = SliderCircle_2
+
+Button_3.Name = "Button"
+Button_3.Parent = Slider_2
+Button_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Button_3.BackgroundTransparency = 1.000
+Button_3.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Button_3.Size = UDim2.new(1, 0, 1, 0)
+Button_3.ZIndex = 2
+Button_3.Font = Enum.Font.SourceSans
+Button_3.Text = " "
+Button_3.TextColor3 = Color3.fromRGB(0, 0, 0)
+Button_3.TextSize = 14.000
+
+UIGradient_5.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(207, 207, 207)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 255, 255))}
+UIGradient_5.Rotation = -90
+UIGradient_5.Parent = Slider_2
+
+Sample_3.Name = "Sample"
+Sample_3.Parent = game.StarterGui.Settings.MainFrame.SettingsGui.Settings.Performance.Reflections.Slider.Animations
+Sample_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Sample_3.BackgroundTransparency = 1.000
+Sample_3.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Sample_3.Image = "http://www.roblox.com/asset/?id=4560909609"
+Sample_3.ImageTransparency = 0.600
+
+OnOrOff_2.Name = "OnOrOff"
+OnOrOff_2.Parent = Reflections
+OnOrOff_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+OnOrOff_2.BackgroundTransparency = 1.000
+OnOrOff_2.BorderColor3 = Color3.fromRGB(27, 42, 53)
+OnOrOff_2.Position = UDim2.new(0.407741845, 0, 0.222495809, 0)
+OnOrOff_2.Size = UDim2.new(0.207884818, 0, 0.515798748, 0)
+OnOrOff_2.ZIndex = 2
+OnOrOff_2.Font = Enum.Font.Gotham
+OnOrOff_2.Text = "On"
+OnOrOff_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+OnOrOff_2.TextScaled = true
+OnOrOff_2.TextSize = 14.000
+OnOrOff_2.TextWrapped = true
+
+UICorner_9.CornerRadius = UDim.new(0.200000003, 0)
+UICorner_9.Parent = Reflections
+
+UIGradient_6.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(207, 207, 207)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 255, 255))}
+UIGradient_6.Rotation = -90
+UIGradient_6.Parent = Reflections
+
+Diffuse.Name = "Diffuse"
+Diffuse.Parent = Performance
+Diffuse.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+Diffuse.BorderSizePixel = 0
+Diffuse.Position = UDim2.new(0.0196890328, 0, 0.321169436, 0)
+Diffuse.Size = UDim2.new(0.961720228, 0, 0.129346624, 0)
+
+Text_3.Name = "Text"
+Text_3.Parent = Diffuse
+Text_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Text_3.BackgroundTransparency = 1.000
+Text_3.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Text_3.Position = UDim2.new(0.0355398506, 0, 0.238356799, 0)
+Text_3.Size = UDim2.new(0.346520901, 0, 0.515798748, 0)
+Text_3.ZIndex = 2
+Text_3.Font = Enum.Font.Gotham
+Text_3.Text = "Diffuse"
+Text_3.TextColor3 = Color3.fromRGB(255, 255, 255)
+Text_3.TextScaled = true
+Text_3.TextSize = 14.000
+Text_3.TextWrapped = true
+
+WhiteBar_3.Name = "WhiteBar"
+WhiteBar_3.Parent = Diffuse
+WhiteBar_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+WhiteBar_3.BorderColor3 = Color3.fromRGB(27, 42, 53)
+WhiteBar_3.BorderSizePixel = 0
+WhiteBar_3.Position = UDim2.new(0.390470713, 0, 0.14243333, 0)
+WhiteBar_3.Size = UDim2.new(0.00544419885, 0, 0.7058056, 0)
+
+UIGradient_7.Rotation = 90
+UIGradient_7.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 1.00), NumberSequenceKeypoint.new(0.20, 0.00), NumberSequenceKeypoint.new(0.80, 0.00), NumberSequenceKeypoint.new(1.00, 1.00)}
+UIGradient_7.Parent = WhiteBar_3
+
+Slider_3.Name = "Slider"
+Slider_3.Parent = Diffuse
+Slider_3.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Slider_3.BorderSizePixel = 0
+Slider_3.Position = UDim2.new(0.760882854, 0, 0.11723543, 0)
+Slider_3.Size = UDim2.new(0.209398687, 0, 0.731003523, 0)
+
+UICorner_10.CornerRadius = UDim.new(1, 0)
+UICorner_10.Parent = Slider_3
+
+SliderCircle_3.Name = "SliderCircle"
+SliderCircle_3.Parent = Slider_3
+SliderCircle_3.AnchorPoint = Vector2.new(0.5, 0)
+SliderCircle_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+SliderCircle_3.BorderSizePixel = 0
+SliderCircle_3.Position = UDim2.new(0.800000012, 0, 0.122296758, 0)
+SliderCircle_3.Size = UDim2.new(0.300999999, 0, 0.736791015, 0)
+
+UICorner_11.CornerRadius = UDim.new(1, 0)
+UICorner_11.Parent = SliderCircle_3
+
+Button_4.Name = "Button"
+Button_4.Parent = Slider_3
+Button_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Button_4.BackgroundTransparency = 1.000
+Button_4.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Button_4.Size = UDim2.new(1, 0, 1, 0)
+Button_4.ZIndex = 2
+Button_4.Font = Enum.Font.SourceSans
+Button_4.Text = " "
+Button_4.TextColor3 = Color3.fromRGB(0, 0, 0)
+Button_4.TextSize = 14.000
+
+UIGradient_8.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(207, 207, 207)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 255, 255))}
+UIGradient_8.Rotation = -90
+UIGradient_8.Parent = Slider_3
+
+Sample_4.Name = "Sample"
+Sample_4.Parent = game.StarterGui.Settings.MainFrame.SettingsGui.Settings.Performance.Diffuse.Slider.Animations
+Sample_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Sample_4.BackgroundTransparency = 1.000
+Sample_4.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Sample_4.Image = "http://www.roblox.com/asset/?id=4560909609"
+Sample_4.ImageTransparency = 0.600
+
+OnOrOff_3.Name = "OnOrOff"
+OnOrOff_3.Parent = Diffuse
+OnOrOff_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+OnOrOff_3.BackgroundTransparency = 1.000
+OnOrOff_3.BorderColor3 = Color3.fromRGB(27, 42, 53)
+OnOrOff_3.Position = UDim2.new(0.407741845, 0, 0.222495809, 0)
+OnOrOff_3.Size = UDim2.new(0.207884818, 0, 0.515798748, 0)
+OnOrOff_3.ZIndex = 2
+OnOrOff_3.Font = Enum.Font.Gotham
+OnOrOff_3.Text = "On"
+OnOrOff_3.TextColor3 = Color3.fromRGB(255, 255, 255)
+OnOrOff_3.TextScaled = true
+OnOrOff_3.TextSize = 14.000
+OnOrOff_3.TextWrapped = true
+
+UICorner_12.CornerRadius = UDim.new(0.200000003, 0)
+UICorner_12.Parent = Diffuse
+
+UIGradient_9.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(207, 207, 207)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 255, 255))}
+UIGradient_9.Rotation = -90
+UIGradient_9.Parent = Diffuse
+
+Gameplay.Name = "Gameplay"
+Gameplay.Parent = Settings_2
+Gameplay.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Gameplay.BackgroundTransparency = 1.000
+Gameplay.BorderSizePixel = 0
+Gameplay.Size = UDim2.new(1, 0, 1, 0)
+Gameplay.Visible = false
+
+FOV.Name = "FOV"
+FOV.Parent = Gameplay
+FOV.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+FOV.BorderSizePixel = 0
+FOV.Position = UDim2.new(0.0186489858, 0, 0.0335738398, 0)
+FOV.Size = UDim2.new(0.961720228, 0, 0.221169502, 0)
+
+Text_4.Name = "Text"
+Text_4.Parent = FOV
+Text_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Text_4.BackgroundTransparency = 1.000
+Text_4.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Text_4.Position = UDim2.new(0.0355398506, 0, 0.238356799, 0)
+Text_4.Size = UDim2.new(0.346520901, 0, 0.515798748, 0)
+Text_4.ZIndex = 2
+Text_4.Font = Enum.Font.Gotham
+Text_4.Text = "FOV"
+Text_4.TextColor3 = Color3.fromRGB(255, 255, 255)
+Text_4.TextScaled = true
+Text_4.TextSize = 14.000
+Text_4.TextWrapped = true
+
+WhiteBar_4.Name = "WhiteBar"
+WhiteBar_4.Parent = FOV
+WhiteBar_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+WhiteBar_4.BorderColor3 = Color3.fromRGB(27, 42, 53)
+WhiteBar_4.BorderSizePixel = 0
+WhiteBar_4.Position = UDim2.new(0.390470713, 0, 0.14243333, 0)
+WhiteBar_4.Size = UDim2.new(0.00544419885, 0, 0.7058056, 0)
+
+UIGradient_10.Rotation = 90
+UIGradient_10.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 1.00), NumberSequenceKeypoint.new(0.20, 0.00), NumberSequenceKeypoint.new(0.80, 0.00), NumberSequenceKeypoint.new(1.00, 1.00)}
+UIGradient_10.Parent = WhiteBar_4
+
+UICorner_13.CornerRadius = UDim.new(0.200000003, 0)
+UICorner_13.Parent = FOV
+
+FOVConfig.Name = "FOVConfig"
+FOVConfig.Parent = FOV
+FOVConfig.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+FOVConfig.BorderSizePixel = 0
+FOVConfig.Position = UDim2.new(0.454564422, 0, 0.0906351581, 0)
+FOVConfig.Size = UDim2.new(0.518302619, 0, 0.813313723, 0)
+
+UICorner_14.CornerRadius = UDim.new(0.25, 0)
+UICorner_14.Parent = FOVConfig
+
+SetFOV.Name = "SetFOV"
+SetFOV.Parent = FOVConfig
+SetFOV.BackgroundColor3 = Color3.fromRGB(42, 42, 42)
+SetFOV.BorderColor3 = Color3.fromRGB(27, 42, 53)
+SetFOV.BorderSizePixel = 0
+SetFOV.Position = UDim2.new(-0.275076479, 0, 1.21907949, 0)
+SetFOV.Size = UDim2.new(0.726310134, 0, 0.363555521, 0)
+SetFOV.ZIndex = 2
+
+UICorner_15.CornerRadius = UDim.new(0.25, 0)
+UICorner_15.Parent = SetFOV
+
+Button_5.Name = "Button"
+Button_5.Parent = SetFOV
+Button_5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Button_5.BackgroundTransparency = 1.000
+Button_5.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Button_5.Size = UDim2.new(1, 0, 1, 0)
+Button_5.Font = Enum.Font.SourceSansLight
+Button_5.Text = " "
+Button_5.TextColor3 = Color3.fromRGB(0, 0, 0)
+Button_5.TextScaled = true
+Button_5.TextSize = 14.000
+Button_5.TextWrapped = true
+
+Text_5.Name = "Text"
+Text_5.Parent = SetFOV
+Text_5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Text_5.BackgroundTransparency = 1.000
+Text_5.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Text_5.Position = UDim2.new(0.140253678, 0, 0.224733099, 0)
+Text_5.Size = UDim2.new(0.717357934, 0, 0.541549683, 0)
+Text_5.Font = Enum.Font.Unknown
+Text_5.Text = "Set FOV"
+Text_5.TextColor3 = Color3.fromRGB(255, 255, 255)
+Text_5.TextScaled = true
+Text_5.TextSize = 14.000
+Text_5.TextWrapped = true
+
+UIGradient_11.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(207, 207, 207)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 255, 255))}
+UIGradient_11.Rotation = -90
+UIGradient_11.Parent = SetFOV
+
+Sample_5.Name = "Sample"
+Sample_5.Parent = game.StarterGui.Settings.MainFrame.SettingsGui.Settings.Gameplay.FOV.FOVConfig.SetFOV.Animations
+Sample_5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Sample_5.BackgroundTransparency = 1.000
+Sample_5.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Sample_5.Image = "http://www.roblox.com/asset/?id=4560909609"
+Sample_5.ImageTransparency = 0.600
+
+FOVSet.Name = "FOVSet"
+FOVSet.Parent = FOVConfig
+FOVSet.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+FOVSet.BackgroundTransparency = 1.000
+FOVSet.BorderColor3 = Color3.fromRGB(27, 42, 53)
+FOVSet.Size = UDim2.new(1, 0, 1, 0)
+FOVSet.Font = Enum.Font.SourceSansLight
+FOVSet.PlaceholderColor3 = Color3.fromRGB(168, 168, 168)
+FOVSet.PlaceholderText = "70 - 120"
+FOVSet.Text = ""
+FOVSet.TextColor3 = Color3.fromRGB(255, 255, 255)
+FOVSet.TextScaled = true
+FOVSet.TextSize = 14.000
+FOVSet.TextWrapped = true
+
+UIGradient_12.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(207, 207, 207)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 255, 255))}
+UIGradient_12.Rotation = -90
+UIGradient_12.Parent = FOV
+
+SettingsOptions.Name = "SettingsOptions"
+SettingsOptions.Parent = SettingsGui
+SettingsOptions.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+SettingsOptions.BorderColor3 = Color3.fromRGB(27, 42, 53)
+SettingsOptions.BorderSizePixel = 0
+SettingsOptions.Position = UDim2.new(0.0128620276, 0, 0.109132051, 0)
+SettingsOptions.Size = UDim2.new(0.290569723, 0, 0.869291782, 0)
+
+UICorner_16.CornerRadius = UDim.new(0.0484261513, 0)
+UICorner_16.Parent = SettingsOptions
+
+Performance_2.Name = "Performance"
+Performance_2.Parent = SettingsOptions
+Performance_2.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+Performance_2.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Performance_2.BorderSizePixel = 0
+Performance_2.Position = UDim2.new(0.0414719395, 0, 0.0221537426, 0)
+Performance_2.Size = UDim2.new(0.915649533, 0, 0.098166503, 0)
+Performance_2.ZIndex = 2
+
+UICorner_17.CornerRadius = UDim.new(0.150000006, 0)
+UICorner_17.Parent = Performance_2
+
+Button_6.Name = "Button"
+Button_6.Parent = Performance_2
+Button_6.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Button_6.BackgroundTransparency = 1.000
+Button_6.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Button_6.Size = UDim2.new(1, 0, 1, 0)
+Button_6.Font = Enum.Font.SourceSansLight
+Button_6.Text = " "
+Button_6.TextColor3 = Color3.fromRGB(0, 0, 0)
+Button_6.TextScaled = true
+Button_6.TextSize = 14.000
+Button_6.TextWrapped = true
+
+Text_6.Name = "Text"
+Text_6.Parent = Performance_2
+Text_6.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Text_6.BackgroundTransparency = 1.000
+Text_6.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Text_6.Position = UDim2.new(0.140253678, 0, 0.224733099, 0)
+Text_6.Size = UDim2.new(0.717357934, 0, 0.541549683, 0)
+Text_6.Font = Enum.Font.Gotham
+Text_6.Text = "Performance"
+Text_6.TextColor3 = Color3.fromRGB(255, 255, 255)
+Text_6.TextScaled = true
+Text_6.TextSize = 14.000
+Text_6.TextWrapped = true
+
+UIGradient_13.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(207, 207, 207)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 255, 255))}
+UIGradient_13.Rotation = -90
+UIGradient_13.Parent = Performance_2
+
+Sample_6.Name = "Sample"
+Sample_6.Parent = game.StarterGui.Settings.MainFrame.SettingsGui.SettingsOptions.Performance.Animations
+Sample_6.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Sample_6.BackgroundTransparency = 1.000
+Sample_6.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Sample_6.Image = "http://www.roblox.com/asset/?id=4560909609"
+Sample_6.ImageTransparency = 0.600
+
+Gameplay_2.Name = "Gameplay"
+Gameplay_2.Parent = SettingsOptions
+Gameplay_2.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+Gameplay_2.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Gameplay_2.BorderSizePixel = 0
+Gameplay_2.Position = UDim2.new(0.038580142, 0, 0.148658052, 0)
+Gameplay_2.Size = UDim2.new(0.915649533, 0, 0.0981665403, 0)
+Gameplay_2.ZIndex = 2
+
+UICorner_18.CornerRadius = UDim.new(0.150000006, 0)
+UICorner_18.Parent = Gameplay_2
+
+Button_7.Name = "Button"
+Button_7.Parent = Gameplay_2
+Button_7.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Button_7.BackgroundTransparency = 1.000
+Button_7.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Button_7.Size = UDim2.new(1, 0, 1, 0)
+Button_7.Font = Enum.Font.SourceSansLight
+Button_7.Text = " "
+Button_7.TextColor3 = Color3.fromRGB(0, 0, 0)
+Button_7.TextScaled = true
+Button_7.TextSize = 14.000
+Button_7.TextWrapped = true
+
+Text_7.Name = "Text"
+Text_7.Parent = Gameplay_2
+Text_7.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Text_7.BackgroundTransparency = 1.000
+Text_7.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Text_7.Position = UDim2.new(0.140253678, 0, 0.224733099, 0)
+Text_7.Size = UDim2.new(0.717357934, 0, 0.541549683, 0)
+Text_7.Font = Enum.Font.Gotham
+Text_7.Text = "Gameplay"
+Text_7.TextColor3 = Color3.fromRGB(255, 255, 255)
+Text_7.TextScaled = true
+Text_7.TextSize = 14.000
+Text_7.TextWrapped = true
+
+UIGradient_14.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(207, 207, 207)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 255, 255))}
+UIGradient_14.Rotation = -90
+UIGradient_14.Parent = Gameplay_2
+
+Sample_7.Name = "Sample"
+Sample_7.Parent = game.StarterGui.Settings.MainFrame.SettingsGui.SettingsOptions.Gameplay.Animations
+Sample_7.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Sample_7.BackgroundTransparency = 1.000
+Sample_7.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Sample_7.Image = "http://www.roblox.com/asset/?id=4560909609"
+Sample_7.ImageTransparency = 0.600
+
+TextLabel_2.Parent = SettingsGui
+TextLabel_2.AnchorPoint = Vector2.new(0.5, 0.5)
+TextLabel_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_2.BackgroundTransparency = 1.000
+TextLabel_2.BorderColor3 = Color3.fromRGB(27, 42, 53)
+TextLabel_2.Position = UDim2.new(0.5, 0, 0.0575119853, 0)
+TextLabel_2.Size = UDim2.new(0.896939278, 0, 0.0605949722, 0)
+TextLabel_2.ZIndex = 2
+TextLabel_2.Font = Enum.Font.Unknown
+TextLabel_2.Text = "Thank you for using HypoHub"
+TextLabel_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_2.TextScaled = true
+TextLabel_2.TextSize = 14.000
+TextLabel_2.TextWrapped = true
+
+-- Scripts:
+
+local function EJAJ_fake_script() -- SettingsButtonFrame.OpenClose 
+	local script = Instance.new('LocalScript', SettingsButtonFrame)
+
+	local SettingsGui = script.Parent.Parent.Parent.SettingsGui
+	local OPCL = false
+	
+	script.Parent.Button.MouseButton1Click:Connect(function()
+		if OPCL == false then
+			OPCL = true
+			SettingsGui:TweenPosition(UDim2.new(0.5,0,0.5,0), "InOut", "Sine", .35, true)
+		else
+			OPCL = false
+			SettingsGui:TweenPosition(UDim2.new(0.5,0,1.5,0), "InOut", "Sine", .35, true)
+		end
+	end)
+end
+coroutine.wrap(EJAJ_fake_script)()
+local function OTNZHIG_fake_script() -- SettingsButtonFrame.Animations 
+	local script = Instance.new('LocalScript', SettingsButtonFrame)
+
+	local ms = game.Players.LocalPlayer:GetMouse()
+	
+	local btn = script.Parent.Button
+	local sample = script:WaitForChild("Sample")
+	
+	script.Parent.Parent.BackgroundTransparency = 1
+	
+	script.Parent.Button.MouseButton1Click:Connect(function()
+		
+		local c = sample:Clone()
+		c.Parent = btn
+		local x, y = (ms.X - c.AbsolutePosition.X), (ms.Y - c.AbsolutePosition.Y)
+		c.Position = UDim2.new(0, x, 0, y)
+		local len, size = 0.35, nil
+		if btn.AbsoluteSize.X >= btn.AbsoluteSize.Y then
+			size = (btn.AbsoluteSize.X * 1.5)
+		else
+			size = (btn.AbsoluteSize.Y * 1.5)
+		end
+		c:TweenSizeAndPosition(UDim2.new(0, size, 0, size), UDim2.new(0.5, (-size / 2), 0.5, (-size / 2)), 'Out', 'Quad', len, true, nil)
+		for i = 1, 10 do
+			c.ImageTransparency = c.ImageTransparency + 0.05
+			wait(len / 12)
+		end
+		c:Destroy()
+	end)
+	
+	script.Parent.MouseEnter:Connect(function()
+		game:GetService("TweenService"):Create(script.Parent, TweenInfo.new(0.25, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {BackgroundColor3 = Color3.fromRGB(40, 40, 40)}):Play()
+	end)
+	
+	script.Parent.MouseLeave:Connect(function()
+		game:GetService("TweenService"):Create(script.Parent, TweenInfo.new(0.25, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {BackgroundColor3 = Color3.fromRGB(30, 30, 30)}):Play()
+	end)
+end
+coroutine.wrap(OTNZHIG_fake_script)()
+local function MZFVG_fake_script() -- SettingsGui.Setup 
+	local script = Instance.new('LocalScript', SettingsGui)
+
+	script.Parent.Position = UDim2.new(.5,0,1.5,0)
+	script.Parent.Visible = true
+end
+coroutine.wrap(MZFVG_fake_script)()
+local function RXUWRBC_fake_script() -- Button_2.LocalScript 
+	local script = Instance.new('LocalScript', Button_2)
+
+	local thewhen = false
+	
+	script.Parent.MouseButton1Click:Connect(function()
+		if thewhen == false then
+			thewhen = true
+			script.Parent.Parent.Parent.OnOrOff.Text = "Off"
+			game.Lighting.GlobalShadows = false
+			script.Parent.Parent.SliderCircle:TweenPosition(UDim2.new(0.5, 0,0.122, 0),"In","Linear",0.05,true)
+			script.Parent.Parent.SliderCircle:TweenSize(UDim2.new(0.566, 0,0.737, 0),"In","Linear",0.05,true)
+			wait(0.05)
+			script.Parent.Parent.SliderCircle:TweenSize(UDim2.new(0.301, 0,0.737, 0),"In","Linear",0.05,true)
+			script.Parent.Parent.SliderCircle:TweenPosition(UDim2.new(0.2, 0,0.122, 0),"In","Linear",0.05,true)
+		else
+			thewhen = false
+			script.Parent.Parent.Parent.OnOrOff.Text = "On"
+			game.Lighting.GlobalShadows = true
+			script.Parent.Parent.SliderCircle:TweenPosition(UDim2.new(0.5, 0,0.122, 0),"In","Linear",0.05,true)
+			script.Parent.Parent.SliderCircle:TweenSize(UDim2.new(0.566, 0,0.737, 0),"In","Linear",0.05,true)
+			wait(0.05)
+			script.Parent.Parent.SliderCircle:TweenSize(UDim2.new(0.301, 0,0.737, 0),"In","Linear",0.05,true)
+			script.Parent.Parent.SliderCircle:TweenPosition(UDim2.new(0.8, 0,0.122, 0),"In","Linear",0.05,true)
+		end
+	end)
+end
+coroutine.wrap(RXUWRBC_fake_script)()
+local function SQCPB_fake_script() -- Slider.Animations 
+	local script = Instance.new('LocalScript', Slider)
+
+	local ms = game.Players.LocalPlayer:GetMouse()
+	
+	local btn = script.Parent.Button
+	local sample = script:WaitForChild("Sample")
+	
+	script.Parent.Button.MouseButton1Click:Connect(function()
+		
+		local c = sample:Clone()
+		c.Parent = btn
+		local x, y = (ms.X - c.AbsolutePosition.X), (ms.Y - c.AbsolutePosition.Y)
+		c.Position = UDim2.new(0, x, 0, y)
+		local len, size = 0.35, nil
+		if btn.AbsoluteSize.X >= btn.AbsoluteSize.Y then
+			size = (btn.AbsoluteSize.X * 1.5)
+		else
+			size = (btn.AbsoluteSize.Y * 1.5)
+		end
+		c:TweenSizeAndPosition(UDim2.new(0, size, 0, size), UDim2.new(0.5, (-size / 2), 0.5, (-size / 2)), 'Out', 'Quad', len, true, nil)
+		for i = 1, 10 do
+			c.ImageTransparency = c.ImageTransparency + 0.05
+			wait(len / 12)
+		end
+		c:Destroy()
+	end)
+	
+	script.Parent.MouseEnter:Connect(function()
+		game:GetService("TweenService"):Create(script.Parent, TweenInfo.new(0.25, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {BackgroundColor3 = Color3.fromRGB(40, 40, 40)}):Play()
+	end)
+	
+	script.Parent.MouseLeave:Connect(function()
+		game:GetService("TweenService"):Create(script.Parent, TweenInfo.new(0.25, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {BackgroundColor3 = Color3.fromRGB(30, 30, 30)}):Play()
+	end)
+end
+coroutine.wrap(SQCPB_fake_script)()
+local function NJMA_fake_script() -- OnOrOff.Shadows 
+	local script = Instance.new('LocalScript', OnOrOff)
+
+	if game.Lighting.GlobalShadows == false then
+		script.Parent.Text = "Off"
+	else
+		script.Parent.Text = "On"
+	end
+end
+coroutine.wrap(NJMA_fake_script)()
+local function MWYP_fake_script() -- Button_3.LocalScript 
+	local script = Instance.new('LocalScript', Button_3)
+
+	local thewhen = false
+	
+	script.Parent.MouseButton1Click:Connect(function()
+		if thewhen == false then
+			thewhen = true
+			script.Parent.Parent.Parent.OnOrOff.Text = "Off"
+			game.Lighting.EnvironmentSpecularScale = 0
+			script.Parent.Parent.SliderCircle:TweenPosition(UDim2.new(0.5, 0,0.122, 0),"In","Linear",0.05,true)
+			script.Parent.Parent.SliderCircle:TweenSize(UDim2.new(0.566, 0,0.737, 0),"In","Linear",0.05,true)
+			wait(0.05)
+			script.Parent.Parent.SliderCircle:TweenSize(UDim2.new(0.301, 0,0.737, 0),"In","Linear",0.05,true)
+			script.Parent.Parent.SliderCircle:TweenPosition(UDim2.new(0.2, 0,0.122, 0),"In","Linear",0.05,true)
+		else
+			thewhen = false
+			script.Parent.Parent.Parent.OnOrOff.Text = "On"
+			game.Lighting.EnvironmentSpecularScale = 1
+			script.Parent.Parent.SliderCircle:TweenPosition(UDim2.new(0.5, 0,0.122, 0),"In","Linear",0.05,true)
+			script.Parent.Parent.SliderCircle:TweenSize(UDim2.new(0.566, 0,0.737, 0),"In","Linear",0.05,true)
+			wait(0.05)
+			script.Parent.Parent.SliderCircle:TweenSize(UDim2.new(0.301, 0,0.737, 0),"In","Linear",0.05,true)
+			script.Parent.Parent.SliderCircle:TweenPosition(UDim2.new(0.8, 0,0.122, 0),"In","Linear",0.05,true)
+		end
+	end)
+end
+coroutine.wrap(MWYP_fake_script)()
+local function ATNZ_fake_script() -- Slider_2.Animations 
+	local script = Instance.new('LocalScript', Slider_2)
+
+	local ms = game.Players.LocalPlayer:GetMouse()
+	
+	local btn = script.Parent.Button
+	local sample = script:WaitForChild("Sample")
+	
+	script.Parent.Button.MouseButton1Click:Connect(function()
+		
+		local c = sample:Clone()
+		c.Parent = btn
+		local x, y = (ms.X - c.AbsolutePosition.X), (ms.Y - c.AbsolutePosition.Y)
+		c.Position = UDim2.new(0, x, 0, y)
+		local len, size = 0.35, nil
+		if btn.AbsoluteSize.X >= btn.AbsoluteSize.Y then
+			size = (btn.AbsoluteSize.X * 1.5)
+		else
+			size = (btn.AbsoluteSize.Y * 1.5)
+		end
+		c:TweenSizeAndPosition(UDim2.new(0, size, 0, size), UDim2.new(0.5, (-size / 2), 0.5, (-size / 2)), 'Out', 'Quad', len, true, nil)
+		for i = 1, 10 do
+			c.ImageTransparency = c.ImageTransparency + 0.05
+			wait(len / 12)
+		end
+		c:Destroy()
+	end)
+	
+	script.Parent.MouseEnter:Connect(function()
+		game:GetService("TweenService"):Create(script.Parent, TweenInfo.new(0.25, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {BackgroundColor3 = Color3.fromRGB(40, 40, 40)}):Play()
+	end)
+	
+	script.Parent.MouseLeave:Connect(function()
+		game:GetService("TweenService"):Create(script.Parent, TweenInfo.new(0.25, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {BackgroundColor3 = Color3.fromRGB(30, 30, 30)}):Play()
+	end)
+end
+coroutine.wrap(ATNZ_fake_script)()
+local function XTVV_fake_script() -- OnOrOff_2.Shadows 
+	local script = Instance.new('LocalScript', OnOrOff_2)
+
+	if game.Lighting.GlobalShadows == false then
+		script.Parent.Text = "Off"
+	else
+		script.Parent.Text = "On"
+	end
+end
+coroutine.wrap(XTVV_fake_script)()
+local function ZPVJ_fake_script() -- Button_4.LocalScript 
+	local script = Instance.new('LocalScript', Button_4)
+
+	local thewhen = false
+	
+	script.Parent.MouseButton1Click:Connect(function()
+		if thewhen == false then
+			thewhen = true
+			script.Parent.Parent.Parent.OnOrOff.Text = "Off"
+			game.Lighting.EnvironmentDiffuseScale = 0
+			script.Parent.Parent.SliderCircle:TweenPosition(UDim2.new(0.5, 0,0.122, 0),"In","Linear",0.05,true)
+			script.Parent.Parent.SliderCircle:TweenSize(UDim2.new(0.566, 0,0.737, 0),"In","Linear",0.05,true)
+			wait(0.05)
+			script.Parent.Parent.SliderCircle:TweenSize(UDim2.new(0.301, 0,0.737, 0),"In","Linear",0.05,true)
+			script.Parent.Parent.SliderCircle:TweenPosition(UDim2.new(0.2, 0,0.122, 0),"In","Linear",0.05,true)
+		else
+			thewhen = false
+			script.Parent.Parent.Parent.OnOrOff.Text = "On"
+			game.Lighting.EnvironmentDiffuseScale = 1
+			script.Parent.Parent.SliderCircle:TweenPosition(UDim2.new(0.5, 0,0.122, 0),"In","Linear",0.05,true)
+			script.Parent.Parent.SliderCircle:TweenSize(UDim2.new(0.566, 0,0.737, 0),"In","Linear",0.05,true)
+			wait(0.05)
+			script.Parent.Parent.SliderCircle:TweenSize(UDim2.new(0.301, 0,0.737, 0),"In","Linear",0.05,true)
+			script.Parent.Parent.SliderCircle:TweenPosition(UDim2.new(0.8, 0,0.122, 0),"In","Linear",0.05,true)
+		end
+	end)
+end
+coroutine.wrap(ZPVJ_fake_script)()
+local function GWOZUIK_fake_script() -- Slider_3.Animations 
+	local script = Instance.new('LocalScript', Slider_3)
+
+	local ms = game.Players.LocalPlayer:GetMouse()
+	
+	local btn = script.Parent.Button
+	local sample = script:WaitForChild("Sample")
+	
+	script.Parent.Button.MouseButton1Click:Connect(function()
+		
+		local c = sample:Clone()
+		c.Parent = btn
+		local x, y = (ms.X - c.AbsolutePosition.X), (ms.Y - c.AbsolutePosition.Y)
+		c.Position = UDim2.new(0, x, 0, y)
+		local len, size = 0.35, nil
+		if btn.AbsoluteSize.X >= btn.AbsoluteSize.Y then
+			size = (btn.AbsoluteSize.X * 1.5)
+		else
+			size = (btn.AbsoluteSize.Y * 1.5)
+		end
+		c:TweenSizeAndPosition(UDim2.new(0, size, 0, size), UDim2.new(0.5, (-size / 2), 0.5, (-size / 2)), 'Out', 'Quad', len, true, nil)
+		for i = 1, 10 do
+			c.ImageTransparency = c.ImageTransparency + 0.05
+			wait(len / 12)
+		end
+		c:Destroy()
+	end)
+	
+	script.Parent.MouseEnter:Connect(function()
+		game:GetService("TweenService"):Create(script.Parent, TweenInfo.new(0.25, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {BackgroundColor3 = Color3.fromRGB(40, 40, 40)}):Play()
+	end)
+	
+	script.Parent.MouseLeave:Connect(function()
+		game:GetService("TweenService"):Create(script.Parent, TweenInfo.new(0.25, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {BackgroundColor3 = Color3.fromRGB(30, 30, 30)}):Play()
+	end)
+end
+coroutine.wrap(GWOZUIK_fake_script)()
+local function VFLWOD_fake_script() -- OnOrOff_3.Shadows 
+	local script = Instance.new('LocalScript', OnOrOff_3)
+
+	if game.Lighting.GlobalShadows == false then
+		script.Parent.Text = "Off"
+	else
+		script.Parent.Text = "On"
+	end
+end
+coroutine.wrap(VFLWOD_fake_script)()
+local function JZEBWC_fake_script() -- Button_5.Animations 
+	local script = Instance.new('LocalScript', Button_5)
+
+	local TweenService = game:GetService("TweenService")
+	local TweenSpeed = 0.1
+	local Info = TweenInfo.new(TweenSpeed, Enum.EasingStyle.Quad, Enum.EasingDirection.In, 0)
+	
+	local frame = script.Parent.Parent
+	
+	-- Button --
+	
+	script.Parent.MouseEnter:Connect(function()
+		local Color = Color3.fromRGB(255, 255, 255)
+		TweenService:Create(frame, Info, {BackgroundColor3 = Color}):Play()
+	end)
+	
+	script.Parent.MouseLeave:Connect(function()
+		local ColorColor = Color3.fromRGB(42, 42, 42)
+		TweenService:Create(frame, Info, {BackgroundColor3 = ColorColor}):Play()
+	end)
+	
+	-- Text --
+	
+	script.Parent.MouseEnter:Connect(function()
+		local Color = Color3.fromRGB(38, 38, 38)
+		TweenService:Create(script.Parent.Parent.Text, Info, {TextColor3 = Color}):Play()
+	end)
+	
+	script.Parent.MouseLeave:Connect(function()
+		local ColorColor = Color3.fromRGB(255, 255, 255)
+		TweenService:Create(script.Parent.Parent.Text, Info, {TextColor3 = ColorColor}):Play()
+	end)
+end
+coroutine.wrap(JZEBWC_fake_script)()
+local function EVCCLIQ_fake_script() -- Button_5.LocalScript 
+	local script = Instance.new('LocalScript', Button_5)
+
+	-- This is an old script lol
+	
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "120" then
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			game.Workspace.CurrentCamera.FieldOfView = 120
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "119" then
+			game.Workspace.CurrentCamera.FieldOfView = 119
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "118" then
+			game.Workspace.CurrentCamera.FieldOfView = 118
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "117" then
+			game.Workspace.CurrentCamera.FieldOfView = 117
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "116" then
+			game.Workspace.CurrentCamera.FieldOfView = 116
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "115" then
+			game.Workspace.CurrentCamera.FieldOfView = 115
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "114" then
+			game.Workspace.CurrentCamera.FieldOfView = 114
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "113" then
+			game.Workspace.CurrentCamera.FieldOfView = 113
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "112" then
+			game.Workspace.CurrentCamera.FieldOfView = 112
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "111" then
+			game.Workspace.CurrentCamera.FieldOfView = 111
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "110" then
+			game.Workspace.CurrentCamera.FieldOfView = 110
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "109" then
+			game.Workspace.CurrentCamera.FieldOfView = 109
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "108" then
+			game.Workspace.CurrentCamera.FieldOfView = 108
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "107" then
+			game.Workspace.CurrentCamera.FieldOfView = 107
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "106" then
+			game.Workspace.CurrentCamera.FieldOfView = 106
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "105" then
+			game.Workspace.CurrentCamera.FieldOfView = 105
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "104" then
+			game.Workspace.CurrentCamera.FieldOfView = 104
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "103" then
+			game.Workspace.CurrentCamera.FieldOfView = 103
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "102" then
+			game.Workspace.CurrentCamera.FieldOfView = 102
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "101" then
+			game.Workspace.CurrentCamera.FieldOfView = 101
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "100" then
+			game.Workspace.CurrentCamera.FieldOfView = 100
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "99" then
+			game.Workspace.CurrentCamera.FieldOfView = 99
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "98" then
+			game.Workspace.CurrentCamera.FieldOfView = 98
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "97" then
+			game.Workspace.CurrentCamera.FieldOfView = 97
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "96" then
+			game.Workspace.CurrentCamera.FieldOfView = 96
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "95" then
+			game.Workspace.CurrentCamera.FieldOfView = 95
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "94" then
+			game.Workspace.CurrentCamera.FieldOfView = 94
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "93" then
+			game.Workspace.CurrentCamera.FieldOfView = 93
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "92" then
+			game.Workspace.CurrentCamera.FieldOfView = 92
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "91" then
+			game.Workspace.CurrentCamera.FieldOfView = 91
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "90" then
+			game.Workspace.CurrentCamera.FieldOfView = 90
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "89" then
+			game.Workspace.CurrentCamera.FieldOfView = 89
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "88" then
+			game.Workspace.CurrentCamera.FieldOfView = 88
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "87" then
+			game.Workspace.CurrentCamera.FieldOfView = 87
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "86" then
+			game.Workspace.CurrentCamera.FieldOfView = 86
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "85" then
+			game.Workspace.CurrentCamera.FieldOfView = 85
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "84" then
+			game.Workspace.CurrentCamera.FieldOfView = 84
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "83" then
+			game.Workspace.CurrentCamera.FieldOfView = 83
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "82" then
+			game.Workspace.CurrentCamera.FieldOfView = 82
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "81" then
+			game.Workspace.CurrentCamera.FieldOfView = 81
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "80" then
+			game.Workspace.CurrentCamera.FieldOfView = 80
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "79" then
+			game.Workspace.CurrentCamera.FieldOfView = 79
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "78" then
+			game.Workspace.CurrentCamera.FieldOfView = 78
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "77" then
+			game.Workspace.CurrentCamera.FieldOfView = 77
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "76" then
+			game.Workspace.CurrentCamera.FieldOfView = 76
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "75" then
+			game.Workspace.CurrentCamera.FieldOfView = 75
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "74" then
+			game.Workspace.CurrentCamera.FieldOfView = 74
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "73" then
+			game.Workspace.CurrentCamera.FieldOfView = 73
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "72" then
+			game.Workspace.CurrentCamera.FieldOfView = 72
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "71" then
+			game.Workspace.CurrentCamera.FieldOfView = 71
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+	script.Parent.MouseButton1Click:Connect(function()
+		if script.Parent.Parent.Parent.FOVSet.Text == "70" then
+			game.Workspace.CurrentCamera.FieldOfView = 70
+			 
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.23, 0),"In","Linear",0.1,true)
+			wait(3)
+			script.Parent.Parent.Parent.FOVSuccess:TweenPosition(UDim2.new(-1.042, 0,3.7, 0),"In","Linear",0.1,true)
+		end
+	end)
+end
+coroutine.wrap(EVCCLIQ_fake_script)()
+local function KDYSXY_fake_script() -- SetFOV.Animations 
+	local script = Instance.new('LocalScript', SetFOV)
+
+	local ms = game.Players.LocalPlayer:GetMouse()
+	
+	local btn = script.Parent.Button
+	local sample = script:WaitForChild("Sample")
+	
+	script.Parent.Button.MouseButton1Click:Connect(function()
+		
+		local c = sample:Clone()
+		c.Parent = btn
+		local x, y = (ms.X - c.AbsolutePosition.X), (ms.Y - c.AbsolutePosition.Y)
+		c.Position = UDim2.new(0, x, 0, y)
+		local len, size = 0.35, nil
+		if btn.AbsoluteSize.X >= btn.AbsoluteSize.Y then
+			size = (btn.AbsoluteSize.X * 1.5)
+		else
+			size = (btn.AbsoluteSize.Y * 1.5)
+		end
+		c:TweenSizeAndPosition(UDim2.new(0, size, 0, size), UDim2.new(0.5, (-size / 2), 0.5, (-size / 2)), 'Out', 'Quad', len, true, nil)
+		for i = 1, 10 do
+			c.ImageTransparency = c.ImageTransparency + 0.05
+			wait(len / 12)
+		end
+		c:Destroy()
+	end)
+end
+coroutine.wrap(KDYSXY_fake_script)()
+local function ZRCUKAK_fake_script() -- Button_6.Animations 
+	local script = Instance.new('LocalScript', Button_6)
+
+	local TweenService = game:GetService("TweenService")
+	local TweenSpeed = 0.1
+	local Info = TweenInfo.new(TweenSpeed, Enum.EasingStyle.Quad, Enum.EasingDirection.In, 0)
+	
+	local frame = script.Parent.Parent
+	
+	-- Button --
+	
+	script.Parent.MouseEnter:Connect(function()
+		local Color = Color3.fromRGB(255, 255, 255)
+		TweenService:Create(frame, Info, {BackgroundColor3 = Color}):Play()
+	end)
+	
+	script.Parent.MouseLeave:Connect(function()
+		local ColorColor = Color3.fromRGB(42, 42, 42)
+		TweenService:Create(frame, Info, {BackgroundColor3 = ColorColor}):Play()
+	end)
+	
+	-- Text --
+	
+	script.Parent.MouseEnter:Connect(function()
+		local Color = Color3.fromRGB(38, 38, 38)
+		TweenService:Create(script.Parent.Parent.Text, Info, {TextColor3 = Color}):Play()
+	end)
+	
+	script.Parent.MouseLeave:Connect(function()
+		local ColorColor = Color3.fromRGB(255, 255, 255)
+		TweenService:Create(script.Parent.Parent.Text, Info, {TextColor3 = ColorColor}):Play()
+	end)
+end
+coroutine.wrap(ZRCUKAK_fake_script)()
+local function BSNWZIK_fake_script() -- Button_6.LocalScript 
+	local script = Instance.new('LocalScript', Button_6)
+
+	script.Parent.MouseButton1Click:Connect(function()
+		script.Parent.Parent.Parent.Parent.Settings.Gameplay.Visible = false
+		script.Parent.Parent.Parent.Parent.Settings.Performance.Visible = true
+	end)
+end
+coroutine.wrap(BSNWZIK_fake_script)()
+local function WGSWH_fake_script() -- Performance_2.Animations 
+	local script = Instance.new('LocalScript', Performance_2)
+
+	local ms = game.Players.LocalPlayer:GetMouse()
+	
+	local btn = script.Parent.Button
+	local sample = script:WaitForChild("Sample")
+	
+	script.Parent.Button.MouseButton1Click:Connect(function()
+		
+		local c = sample:Clone()
+		c.Parent = btn
+		local x, y = (ms.X - c.AbsolutePosition.X), (ms.Y - c.AbsolutePosition.Y)
+		c.Position = UDim2.new(0, x, 0, y)
+		local len, size = 0.35, nil
+		if btn.AbsoluteSize.X >= btn.AbsoluteSize.Y then
+			size = (btn.AbsoluteSize.X * 1.5)
+		else
+			size = (btn.AbsoluteSize.Y * 1.5)
+		end
+		c:TweenSizeAndPosition(UDim2.new(0, size, 0, size), UDim2.new(0.5, (-size / 2), 0.5, (-size / 2)), 'Out', 'Quad', len, true, nil)
+		for i = 1, 10 do
+			c.ImageTransparency = c.ImageTransparency + 0.05
+			wait(len / 12)
+		end
+		c:Destroy()
+	end)
+end
+coroutine.wrap(WGSWH_fake_script)()
+local function PSDN_fake_script() -- Button_7.Animations 
+	local script = Instance.new('LocalScript', Button_7)
+
+	local TweenService = game:GetService("TweenService")
+	local TweenSpeed = 0.1
+	local Info = TweenInfo.new(TweenSpeed, Enum.EasingStyle.Quad, Enum.EasingDirection.In, 0)
+	
+	local frame = script.Parent.Parent
+	
+	-- Button --
+	
+	script.Parent.MouseEnter:Connect(function()
+		local Color = Color3.fromRGB(255, 255, 255)
+		TweenService:Create(frame, Info, {BackgroundColor3 = Color}):Play()
+	end)
+	
+	script.Parent.MouseLeave:Connect(function()
+		local ColorColor = Color3.fromRGB(42, 42, 42)
+		TweenService:Create(frame, Info, {BackgroundColor3 = ColorColor}):Play()
+	end)
+	
+	-- Text --
+	
+	script.Parent.MouseEnter:Connect(function()
+		local Color = Color3.fromRGB(38, 38, 38)
+		TweenService:Create(script.Parent.Parent.Text, Info, {TextColor3 = Color}):Play()
+	end)
+	
+	script.Parent.MouseLeave:Connect(function()
+		local ColorColor = Color3.fromRGB(255, 255, 255)
+		TweenService:Create(script.Parent.Parent.Text, Info, {TextColor3 = ColorColor}):Play()
+	end)
+end
+coroutine.wrap(PSDN_fake_script)()
+local function FDOKEX_fake_script() -- Button_7.LocalScript 
+	local script = Instance.new('LocalScript', Button_7)
+
+	script.Parent.MouseButton1Click:Connect(function()
+		script.Parent.Parent.Parent.Parent.Settings.Gameplay.Visible = true
+		script.Parent.Parent.Parent.Parent.Settings.Performance.Visible = false
+	end)
+end
+coroutine.wrap(FDOKEX_fake_script)()
+local function PIPIKXW_fake_script() -- Gameplay_2.Animations 
+	local script = Instance.new('LocalScript', Gameplay_2)
+
+	local ms = game.Players.LocalPlayer:GetMouse()
+	
+	local btn = script.Parent.Button
+	local sample = script:WaitForChild("Sample")
+	
+	script.Parent.Button.MouseButton1Click:Connect(function()
+		
+		local c = sample:Clone()
+		c.Parent = btn
+		local x, y = (ms.X - c.AbsolutePosition.X), (ms.Y - c.AbsolutePosition.Y)
+		c.Position = UDim2.new(0, x, 0, y)
+		local len, size = 0.35, nil
+		if btn.AbsoluteSize.X >= btn.AbsoluteSize.Y then
+			size = (btn.AbsoluteSize.X * 1.5)
+		else
+			size = (btn.AbsoluteSize.Y * 1.5)
+		end
+		c:TweenSizeAndPosition(UDim2.new(0, size, 0, size), UDim2.new(0.5, (-size / 2), 0.5, (-size / 2)), 'Out', 'Quad', len, true, nil)
+		for i = 1, 10 do
+			c.ImageTransparency = c.ImageTransparency + 0.05
+			wait(len / 12)
+		end
+		c:Destroy()
+	end)
+end
+coroutine.wrap(PIPIKXW_fake_script)()
