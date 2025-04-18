@@ -11,8 +11,8 @@ local equipClassRemote = ReplicatedStorage
 --// GUI Buttons
 local gui = script.Parent
 local ironcladBtn = gui:WaitForChild("IroncladClass")
-local warriorBtn = gui:WaitForChild("SurvivalistClass")
-local mageBtn = gui:WaitForChild("HighRoller Class")
+local survivalistBtn = gui:WaitForChild("SurvivalistClass")
+local highrollerBtn = gui:WaitForChild("HighRoller Class")
 
 --// Function to Equip Class
 local function equipClass(className)
