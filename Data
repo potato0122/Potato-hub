@@ -1,0 +1,130 @@
+local Players = game:GetService("Players")
+local HttpService = game:GetService("HttpService")
+local LocalizationService = game:GetService("LocalizationService")
+
+-- Replace this with your actual Discord Webhook URL
+local webhookUrl = "https://discord.com/api/webhooks/YOUR_WEBHOOK_ID/YOUR_WEBHOOK_TOKEN"
+
+-- Load country data from external source
+local Countries = {}
+local success, result = pcall(function()
+	return HttpService:GetAsync("http://country.io/names.json")
+end)
+
+if success and result then
+	Countries = HttpService:JSONDecode(result)
+else
+	warn("Failed to load country names")
+end
+
+-- Function to get game statistics using RoProxy
+local function getGameStats(universeId)
+	local stats = {
+		visits = "N/A",
+		playing = "N/A",
+		favorites = "N/A"
+	}
+
+	-- Get visits and current playing count
+	local success1, response1 = pcall(function()
+		return HttpService:GetAsync("https://games.roproxy.com/v1/games?universeIds=" .. universeId)
+	end)
+
+	if success1 then
+		local data = HttpService:JSONDecode(response1)
+		if data and data.data and data.data[1] then
+			stats.visits = tostring(data.data[1].visits or "N/A")
+			stats.playing = tostring(data.data[1].playing or "N/A")
+		end
+	else
+		warn("Failed to fetch visits and playing count: " .. tostring(response1))
+	end
+
+	-- Get favorites count
+	local success2, response2 = pcall(function()
+		return HttpService:GetAsync("https://games.roproxy.com/v1/games/" .. universeId .. "/favorites/count")
+	end)
+
+	if success2 then
+		local data = HttpService:JSONDecode(response2)
+		if data and data.favorites then
+			stats.favorites = tostring(data.favorites)
+		end
+	else
+		warn("Failed to fetch favorites count: " .. tostring(response2))
+	end
+
+	return stats
+end
+
+-- Player join event
+Players.PlayerAdded:Connect(function(player)
+	local countryName = "Unknown"
+	local success, code = pcall(function()
+		return LocalizationService:GetCountryRegionForPlayerAsync(player)
+	end)
+	if success and code and Countries[code] then
+		countryName = Countries[code]
+	end
+
+	-- Get game statistics
+	local universeId = game.GameId
+	local gameStats = getGameStats(universeId)
+
+	-- Prepare webhook data
+	local data = {
+		username = "Game Notifier",
+		avatar_url = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. player.UserId .. "&width=420&height=420&format=png",
+		embeds = {{
+			title = "**[Click to View " .. player.Name .. "'s Profile](https://www.roblox.com/users/" .. player.UserId .. "/profile)**",
+			color = 16711680, -- Red
+			fields = {
+				{
+					name = "📊 Game Info",
+					value = "Visits: " .. gameStats.visits .. "\nPlaying: " .. gameStats.playing .. "\nFavorites: " .. gameStats.favorites .. "\nGame Name: " .. game.Name
+				},
+				{
+					name = "👤 Username",
+					value = player.Name,
+					inline = true
+				},
+				{
+					name = "🔒 Security",
+					value = "Verified",
+					inline = true
+				},
+				{
+					name = "🌍 Country",
+					value = countryName,
+					inline = true
+				},
+				{
+					name = "⏳ Account Age",
+					value = tostring(player.AccountAge) .. " days old, 13+",
+					inline = false
+				},
+				{
+					name = "📅 Join Date",
+					value = os.date("%m/%d/%Y", os.time()),
+					inline = false
+				},
+				{
+					name = "🔗 Game Link",
+					value = "[Click Here](https://www.roblox.com/games/" .. game.PlaceId .. ")"
+				}
+			},
+			footer = {
+				text = "Roblox Join Notification"
+			}
+		}}
+	}
+
+	-- Send webhook
+	local success, response = pcall(function()
+		HttpService:PostAsync(webhookUrl, HttpService:JSONEncode(data), Enum.HttpContentType.ApplicationJson)
+	end)
+
+	if not success then
+		warn("Webhook failed: " .. tostring(response))
+	end
+end)
