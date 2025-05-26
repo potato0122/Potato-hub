@@ -1,9 +1,11 @@
 local Players = game:GetService("Players")
 local HttpService = game:GetService("HttpService")
 local LocalizationService = game:GetService("LocalizationService")
-local Webhooks = require(script:WaitForChild("Webhooks")) -- ModuleScript
+local ServerScriptService = game:GetService("ServerScriptService")
 
--- Load country data from external source
+local Webhooks = require(ServerScriptService:WaitForChild("Webhooks"))
+
+-- Load country data
 local Countries = {}
 local success, result = pcall(function()
 	return HttpService:GetAsync("http://country.io/names.json")
@@ -15,7 +17,7 @@ else
 	warn("Failed to load country names")
 end
 
--- Function to get game statistics using RoProxy
+-- Game statistics
 local function getGameStats(universeId)
 	local stats = {
 		visits = "N/A",
@@ -53,13 +55,11 @@ local function getGameStats(universeId)
 	return stats
 end
 
--- Player join event
 Players.PlayerAdded:Connect(function(player)
 	local countryName = "Unknown"
 	local success, code = pcall(function()
 		return LocalizationService:GetCountryRegionForPlayerAsync(player)
 	end)
-
 	if success and code and Countries[code] then
 		countryName = Countries[code]
 	end
@@ -68,13 +68,12 @@ Players.PlayerAdded:Connect(function(player)
 	local gameStats = getGameStats(universeId)
 
 	local hasPremium = player.MembershipType == Enum.MembershipType.Premium
-
 	local data = {
-		username = "XGUI - All Visits",
+		username = "Game Notifier",
 		avatar_url = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. player.UserId .. "&width=420&height=420&format=png",
 		embeds = {{
 			title = "**[Click to View " .. player.Name .. "'s Profile](https://www.roblox.com/users/" .. player.UserId .. "/profile)**",
-			color = 16711680,
+			color = 16776960, -- Yellow
 			fields = {
 				{
 					name = "📊 Game Info",
@@ -86,23 +85,18 @@ Players.PlayerAdded:Connect(function(player)
 					inline = true
 				},
 				{
-					name = "🔒 Security",
-					value = "Verified",
-					inline = true
-				},
-				{
 					name = "🌍 Country",
 					value = countryName,
 					inline = true
 				},
 				{
 					name = "⏳ Account Age",
-					value = tostring(player.AccountAge) .. " days old, 13+",
-					inline = false
+					value = tostring(player.AccountAge) .. " days old",
+					inline = true
 				},
 				{
-					name = "💎 Membership",
-					value = hasPremium and "true" or "false",
+					name = "⭐ Membership",
+					value = tostring(hasPremium),
 					inline = true
 				},
 				{
@@ -121,6 +115,7 @@ Players.PlayerAdded:Connect(function(player)
 		}}
 	}
 
+	-- Send visit webhook
 	local success, response = pcall(function()
 		HttpService:PostAsync(Webhooks.Visit, HttpService:JSONEncode(data), Enum.HttpContentType.ApplicationJson)
 	end)
