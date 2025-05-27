@@ -1,103 +1,85 @@
 local Players = game:GetService("Players")
 local HttpService = game:GetService("HttpService")
 local LocalizationService = game:GetService("LocalizationService")
-local ServerScriptService = game:GetService("ServerScriptService")
+local MarketplaceService = game:GetService("MarketplaceService")
 
-local Webhooks = require(ServerScriptService:WaitForChild("Webhooks"))
+local WebhookModule = require(game.ServerScriptService:WaitForChild("WebhookModule"))
+local webhookUrl = WebhookModule.Webhooks.Visit
 
--- Load country data
+-- Country data loader
 local Countries = {}
-local success, result = pcall(function()
-	return HttpService:GetAsync("http://country.io/names.json")
+pcall(function()
+	local result = HttpService:GetAsync("http://country.io/names.json")
+	Countries = HttpService:JSONDecode(result)
 end)
 
-if success and result then
-	Countries = HttpService:JSONDecode(result)
-else
-	warn("Failed to load country names")
+-- Verification asset IDs
+local VerifiedAssets = {18824203, 1567446, 93078560, 102611803}
+
+-- Helper function to check Premium
+local function hasPremium(player)
+	local success, result = pcall(function()
+		return player.MembershipType == Enum.MembershipType.Premium
+	end)
+	return success and result
 end
 
--- Game statistics
-local function getGameStats(universeId)
-	local stats = {
-		visits = "N/A",
-		playing = "N/A",
-		favorites = "N/A"
-	}
-
-	local success1, response1 = pcall(function()
-		return HttpService:GetAsync("https://games.roproxy.com/v1/games?universeIds=" .. universeId)
-	end)
-
-	if success1 then
-		local data = HttpService:JSONDecode(response1)
-		if data and data.data and data.data[1] then
-			stats.visits = tostring(data.data[1].visits or "N/A")
-			stats.playing = tostring(data.data[1].playing or "N/A")
+-- Helper function to check verification
+local function isPlayerVerified(player)
+	for _, assetId in ipairs(VerifiedAssets) do
+		local success, owns = pcall(function()
+			return MarketplaceService:PlayerOwnsAsset(player, assetId)
+		end)
+		if success and owns then
+			return true
 		end
-	else
-		warn("Failed to fetch visits and playing count: " .. tostring(response1))
 	end
-
-	local success2, response2 = pcall(function()
-		return HttpService:GetAsync("https://games.roproxy.com/v1/games/" .. universeId .. "/favorites/count")
-	end)
-
-	if success2 then
-		local data = HttpService:JSONDecode(response2)
-		if data and data.favorites then
-			stats.favorites = tostring(data.favorites)
-		end
-	else
-		warn("Failed to fetch favorites count: " .. tostring(response2))
-	end
-
-	return stats
+	return false
 end
 
+-- Player join webhook logic
 Players.PlayerAdded:Connect(function(player)
-	local countryName = "Unknown"
-	local success, code = pcall(function()
-		return LocalizationService:GetCountryRegionForPlayerAsync(player)
+	local country = "Unknown"
+	local countryCode
+	pcall(function()
+		countryCode = LocalizationService:GetCountryRegionForPlayerAsync(player)
+		country = Countries[countryCode] or "Unknown"
 	end)
-	if success and code and Countries[code] then
-		countryName = Countries[code]
-	end
 
-	local universeId = game.GameId
-	local gameStats = getGameStats(universeId)
+	local isPremium = hasPremium(player)
+	local isVerified = isPlayerVerified(player)
 
-	local hasPremium = player.MembershipType == Enum.MembershipType.Premium
 	local data = {
 		username = "Game Notifier",
 		avatar_url = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. player.UserId .. "&width=420&height=420&format=png",
 		embeds = {{
 			title = "**[Click to View " .. player.Name .. "'s Profile](https://www.roblox.com/users/" .. player.UserId .. "/profile)**",
-			color = 16776960, -- Yellow
+			color = 65280, -- Green
 			fields = {
-				{
-					name = "📊 Game Info",
-					value = "Visits: " .. gameStats.visits .. "\nPlaying: " .. gameStats.playing .. "\nFavorites: " .. gameStats.favorites .. "\nGame Name: " .. game.Name
-				},
 				{
 					name = "👤 Username",
 					value = player.Name,
 					inline = true
 				},
 				{
+					name = "🔒 Verified",
+					value = isVerified and "Verified" or "Unverified",
+					inline = true
+				},
+				{
+					name = "🏅 Membership",
+					value = tostring(isPremium),
+					inline = true
+				},
+				{
 					name = "🌍 Country",
-					value = countryName,
+					value = country,
 					inline = true
 				},
 				{
 					name = "⏳ Account Age",
-					value = tostring(player.AccountAge) .. " days old",
-					inline = true
-				},
-				{
-					name = "⭐ Membership",
-					value = tostring(hasPremium),
-					inline = true
+					value = tostring(player.AccountAge) .. " days",
+					inline = false
 				},
 				{
 					name = "📅 Join Date",
@@ -115,12 +97,7 @@ Players.PlayerAdded:Connect(function(player)
 		}}
 	}
 
-	-- Send visit webhook
-	local success, response = pcall(function()
-		HttpService:PostAsync(Webhooks.Visit, HttpService:JSONEncode(data), Enum.HttpContentType.ApplicationJson)
+	pcall(function()
+		HttpService:PostAsync(webhookUrl, HttpService:JSONEncode(data), Enum.HttpContentType.ApplicationJson)
 	end)
-
-	if not success then
-		warn("Webhook failed: " .. tostring(response))
-	end
 end)
