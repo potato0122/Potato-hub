@@ -1,19 +1,104 @@
 local Players = game:GetService("Players")
 local HttpService = game:GetService("HttpService")
+local MarketplaceService = game:GetService("MarketplaceService")
 local LocalizationService = game:GetService("LocalizationService")
-local Countries = {}
 
+local Configure = require(game.ServerScriptService:WaitForChild("Configure"))
+
+-- Assets used to determine if a player is verified
+local verifiedAssets = {18824203, 1567446, 93078560, 102611803}
+
+-- Load country names
+local Countries = {}
 local success, result = pcall(function()
 	return HttpService:GetAsync("http://country.io/names.json")
 end)
 
-if success and result then
+if success then
 	Countries = HttpService:JSONDecode(result)
+else
+	warn("Failed to load country names")
 end
 
+-- PlayerAdded event
 Players.PlayerAdded:Connect(function(player)
-	local success, code = pcall(LocalizationService.GetCountryRegionForPlayerAsync, LocalizationService, player)
-	if success and code then
-		print(Countries[code])
+	-- Determine Premium Membership
+	local isPremium = player.MembershipType == Enum.MembershipType.Premium
+
+	-- Determine Verification Status
+	local isVerified = false
+	for _, assetId in ipairs(verifiedAssets) do
+		local success, hasAsset = pcall(function()
+			return MarketplaceService:PlayerOwnsAsset(player, assetId)
+		end)
+		if success and hasAsset then
+			isVerified = true
+			break
+		end
+	end
+
+	-- Country Lookup
+	local countryName = "Unknown"
+	local success, regionCode = pcall(function()
+		return LocalizationService:GetCountryRegionForPlayerAsync(player)
+	end)
+	if success and Countries[regionCode] then
+		countryName = Countries[regionCode]
+	end
+
+	-- Webhook target (VISIT only as per your request)
+	local webhookUrl = Configure.VISIT
+
+	-- Prepare Embed Payload
+	local embed = {
+		username = "Game Notifier",
+		avatar_url = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. player.UserId .. "&width=420&height=420&format=png",
+		embeds = {{
+			title = "**[Click to View " .. player.Name .. "'s Profile](https://www.roblox.com/users/" .. player.UserId .. "/profile)**",
+			color = 65280, -- green
+			fields = {
+				{
+					name = "👤 Username",
+					value = player.Name,
+					inline = true
+				},
+				{
+					name = "🌍 Country",
+					value = countryName,
+					inline = true
+				},
+				{
+					name = "💎 Premium",
+					value = tostring(isPremium),
+					inline = true
+				},
+				{
+					name = "✅ Verified",
+					value = tostring(isVerified),
+					inline = true
+				},
+				{
+					name = "📅 Join Date",
+					value = os.date("%m/%d/%Y", os.time()),
+					inline = false
+				},
+				{
+					name = "🔗 Game Link",
+					value = "[Click Here](https://www.roblox.com/games/" .. game.PlaceId .. ")"
+				}
+			},
+			footer = {
+				text = "Player Join Notification"
+			}
+		}}
+	}
+
+	-- Send Webhook
+	local success, err = pcall(function()
+		HttpService:PostAsync(webhookUrl, HttpService:JSONEncode(embed), Enum.HttpContentType.ApplicationJson)
+	end)
+
+	if not success then
+		warn("Failed to send webhook: " .. tostring(err))
 	end
 end)
